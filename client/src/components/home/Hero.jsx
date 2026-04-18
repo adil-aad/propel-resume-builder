@@ -84,7 +84,7 @@ const Hero = () => {
 
                     {/* Headline + CTA */}
                     <h1 className="text-5xl md:text-6xl font-semibold max-w-5xl text-center mt-4 md:leading-[70px]">
-                        Build stunning websites with <span className=" bg-gradient-to-r from-indigo-700 to-indigo-600 bg-clip-text text-transparent text-nowrap">PrebuiltUI </span> Components.
+                        Land your dream job with <span className=" bg-gradient-to-r from-indigo-700 to-indigo-600 bg-clip-text text-transparent text-nowrap">AI-powered </span> Components.
                     </h1>
 
                     <p className="max-w-md text-center text-base my-7">Explore a growing library of over 320+ beautifully crafted, customizable components.</p>
