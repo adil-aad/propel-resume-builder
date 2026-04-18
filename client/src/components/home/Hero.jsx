@@ -30,7 +30,7 @@ const Hero = () => {
                     </div>
 
                     <div className="flex gap-2">
-                        <Link to='/app?state=register' className="hidden md:block px-6 py-2 bg-green-500 hover:bg-indigo-700 active:scale-95 transition-all rounded-full text-white">
+                        <Link to='/app?state=register' className="hidden md:block px-6 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white">
                             Get started
                         </Link>
                         <Link to='/app?state=logins' className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900" >
@@ -48,9 +48,9 @@ const Hero = () => {
                 {/* Mobile Menu */}
                 <div className={`fixed inset-0 z-[100] bg-black/40 text-black backdrop-blur flex flex-col items-center justify-center text-lg gap-8 md:hidden transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`} >
                     <a href="/" className="text-white">Home</a>
-                    <a href="/products" className="text-white">Products</a>
-                    <a href="/stories" className="text-white">Stories</a>
-                    <a href="/pricing" className="text-white">Pricing</a>
+                    <a href="#products" className="text-white">Features</a>
+                    <a href="#testimonials" className="text-white">Testimonials</a>
+                    <a href="#contact" className="text-white">Contact</a>
                     <button onClick={() => setMenuOpen(false)} className="active:ring-3 active:ring-white aspect-square size-10 p-1 items-center justify-center bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-md flex" >
                         X
                     </button>
