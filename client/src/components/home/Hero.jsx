@@ -33,9 +33,9 @@ const Hero = () => {
                         <Link to='/app?state=register' className="hidden md:block px-6 py-2 bg-green-500 hover:bg-indigo-700 active:scale-95 transition-all rounded-full text-white">
                             Get started
                         </Link>
-                        <a href="" className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900" >
+                        <Link to='/app?state=logins' className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900" >
                             Login
-                        </a>
+                        </Link>
                     </div>
 
                     <button onClick={() => setMenuOpen(true)} className="md:hidden active:scale-90 transition" >
