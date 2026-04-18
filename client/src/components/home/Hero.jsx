@@ -87,7 +87,7 @@ const Hero = () => {
                         Land your dream job with <span className=" bg-gradient-to-r from-indigo-700 to-indigo-600 bg-clip-text text-transparent text-nowrap">AI-powered </span> Components.
                     </h1>
 
-                    <p className="max-w-md text-center text-base my-7">Explore a growing library of over 320+ beautifully crafted, customizable components.</p>
+                    <p className="max-w-md text-center text-base my-7">Create Edit and Downliad the AI powered resme </p>
 
                     {/* CTA Buttons */}
                     <div className="flex items-center gap-4 ">
