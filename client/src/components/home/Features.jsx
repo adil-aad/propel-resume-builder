@@ -1,5 +1,6 @@
 import React from "react"
 import {Zap} from 'lucide-react'
+import Title from "./Title";
 
 const Features = () => {
     const [isHover, setIsHover] = React.useState(false);
@@ -11,7 +12,9 @@ const Features = () => {
                 <Zap width={14}/>
                 <span>Simple Process</span>
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-center">
+
+            <Title title='Build your resume' description='Build standout, ATS-friendly resumes in minutes with smart AI suggestions, polished templates, and effortless customization'/>
+            <div className="flex flex-col md:flex-row items-center justify-center xl:-mt-10">
                 <img className="max-w-2xl w-full xl:-ml-32" src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/features/group-image-1.png" alt="" />
                 <div className="px-4 md:px-0" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
                     <div className={"flex items-center justify-center gap-6 max-w-md group cursor-pointer"}>
