@@ -38,7 +38,7 @@ const Dashboard = () => {
         </p>
 
         <div className='flex gap-5'>
-          <button className='w-full bg-white sm:max-w-40 h-52 flex flex-col items-center justify-center rounded-2xl gap-3 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-100 hover:border-cyan-200'>
+          <button onClick={()=>setshowCreateResume(true)} className='w-full bg-white sm:max-w-40 h-52 flex flex-col items-center justify-center rounded-2xl gap-3 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-100 hover:border-cyan-200'>
             <div className='size-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-cyan-600 shadow-md shadow-cyan-200 flex items-center justify-center group-hover:scale-110 transition-all duration-300'>
               <PlusIcon className='size-7 text-white'/>
             </div>
