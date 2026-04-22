@@ -1,15 +1,29 @@
-import { FilePenLineIcon, PencilIcon, Plus, PlusIcon, Trash, UploadCloudIcon } from 'lucide-react'
+import { FilePenLineIcon, PencilIcon, Plus, PlusIcon, Trash, UploadCloudIcon, XIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { dummyResumeData } from '../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
 
   const colors = ['#06b6d4', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981']
 
   const [allResumes, setAllResumes] = useState([])
+  const [showCreateResume, setshowCreateResume] = useState(false)
+  const [showUploadResume, setshowUploadResume] = useState(false)
+  const [title, setTitle] = useState('')
+  const [resume, setResume] = useState(null)
+  const [editResumeId, setEditResumeId] = useState('')
+
+  const navigate = useNavigate()
 
   const loadAllResumes = async () => {
     setAllResumes(dummyResumeData)
+  }
+
+  const createResume = async (event) => {
+    event.preventDefault()
+    setshowCreateResume(false)
+    navigate(`/app/builder/res123`)
   }
 
   useEffect(()=>{
@@ -80,6 +94,26 @@ const Dashboard = () => {
               </div>
             )
           })}
+        </div>
+        {
+          showCreateResume && (
+            <form onSubmit={createResume} onClick={()=> setshowCreateResume(false)} className='fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 
+            z-10 flex items-center justify-center'>
+              <div onClick={e => e.stopPropagation()} className='relative bg-slate-50 border shadow-md rounded-lg w-full max-w-sm p-6'>
+                <h2 className='text-xl font-bold mb-4'>Create a Resume</h2>
+                <input type="text" placeholder='Enter Resume Title' className='w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600' required />
+                <button className='w-full py-2 bg-green-600 text-white rounded hover:bg-green-700
+                transition-colors'>Create Resume</button>
+                <XIcon className='absolute top-4 right-4 text-slate-400 hover:text-slate-600
+                cursor-pointer transition-colors' onClick={()=>{setshowCreateResume(false); setTitle('')}}/>
+              </div>
+
+            </form>
+          )
+        }
+
+        <div>
+
         </div>
       </div>
       
