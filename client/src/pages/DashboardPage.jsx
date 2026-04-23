@@ -95,123 +95,49 @@ const Dashboard = () => {
             )
           })}
         </div>
-
-        {/* Modern Create Resume Modal */}
-        {showCreateResume && (
-          <div onClick={() => setshowCreateResume(false)} className='fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn'>
-            <div onClick={e => e.stopPropagation()} className='relative bg-white rounded-2xl shadow-2xl w-full max-w-md transform transition-all duration-300 animate-scaleIn'>
-              {/* Header */}
-              <div className='relative overflow-hidden rounded-t-2xl'>
-                <div className='absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 opacity-10'></div>
-                <div className='relative px-6 pt-6 pb-4 border-b border-gray-100'>
-                  <h2 className='text-2xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 bg-clip-text text-transparent'>
-                    Create New Resume
-                  </h2>
-                  <p className='text-sm text-gray-500 mt-1'>Start building your professional resume</p>
-                  <button 
-                    onClick={() => {setshowCreateResume(false); setTitle('')}} 
-                    className='absolute top-5 right-5 p-1 rounded-lg hover:bg-gray-100 transition-colors'
-                  >
-                    <XIcon className='size-5 text-gray-400 hover:text-gray-600 transition-colors'/>
-                  </button>
-                </div>
+        {
+          showCreateResume && (
+            <form onSubmit={createResume} onClick={()=> setshowCreateResume(false)} className='fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 
+            z-10 flex items-center justify-center'>
+              <div onClick={e => e.stopPropagation()} className='relative bg-slate-50 border shadow-md rounded-lg w-full max-w-sm p-6'>
+                <h2 className='text-xl font-bold mb-4'>Create a Resume</h2>
+                <input onChange={(e)=> setTitle(e.target.value)} value={title} type="text" placeholder='Enter Resume Title' className='w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600' required />
+                <button className='w-full py-2 bg-green-600 text-white rounded hover:bg-green-700
+                transition-colors'>Create Resume</button>
+                <XIcon className='absolute top-4 right-4 text-slate-400 hover:text-slate-600
+                cursor-pointer transition-colors' onClick={()=>{setshowCreateResume(false); setTitle('')}}/>
               </div>
 
-              {/* Form */}
-              <form onSubmit={createResume} className='p-6'>
-                <div className='mb-6'>
-                  <label className='block text-sm font-semibold text-gray-700 mb-2'>
-                    Resume Title
-                  </label>
-                  <input 
-                    type="text" 
-                    className='w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200 outline-none transition-all duration-200 text-gray-700'
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required 
-                  />
-                </div>
+            </form>
+          )
+        }
 
-                {/* Action Buttons */}
-                <div className='flex gap-3'>
-                  <button 
-                    type="button"
-                    onClick={() => {setshowCreateResume(false); setTitle('')}}
-                    className='flex-1 py-2.5 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-all duration-200'
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    type="submit" 
-                    className='flex-1 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-medium shadow-md shadow-purple-200 hover:shadow-lg hover:shadow-purple-300 transition-all duration-200 hover:scale-[1.02]'
-                  >
-                    Create Resume
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
+        {
+          showUploadResume && (
+            <form onSubmit={uploadResume} onClick={()=> setshowUploadResume(false)} className='fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 
+            z-10 flex items-center justify-center'>
+              <div onClick={e => e.stopPropagation()} className='relative bg-slate-50 border shadow-md rounded-lg w-full max-w-sm p-6'>
+                <h2 className='text-xl font-bold mb-4'>Upload Resume</h2>
+                <input onChange={(e)=> setTitle(e.target.value)} value={title} type="text" placeholder='Enter Resume Title' className='w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600' required />
+                <button className='w-full py-2 bg-green-600 text-white rounded hover:bg-green-700
+                transition-colors'>Create Resume</button>
+                <XIcon className='absolute top-4 right-4 text-slate-400 hover:text-slate-600
+                cursor-pointer transition-colors' onClick={()=>{setshowUploadResume(false); setTitle('')}}/>
+              </div>
 
-        {/* Upload Resume Modal (placeholder for consistency) */}
-        {showUploadResume && (
-          <div onClick={() => setshowUploadResume(false)} className='fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4'>
-            <div onClick={e => e.stopPropagation()} className='relative bg-white rounded-2xl shadow-2xl w-full max-w-md'>
-              <div className='relative px-6 pt-6 pb-4 border-b border-gray-100'>
-                <h2 className='text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent'>
-                  Upload Resume
-                </h2>
-                <button 
-                  onClick={() => setshowUploadResume(false)} 
-                  className='absolute top-5 right-5 p-1 rounded-lg hover:bg-gray-100'
-                >
-                  <XIcon className='size-5 text-gray-400 hover:text-gray-600'/>
-                </button>
-              </div>
-              <div className='p-6'>
-                <div className='border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-purple-300 transition-colors'>
-                  <UploadCloudIcon className='size-12 text-gray-400 mx-auto mb-3'/>
-                  <p className='text-gray-600'>Drag & drop or click to upload</p>
-                  <p className='text-xs text-gray-400 mt-1'>PDF, DOCX up to 5MB</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+            </form>
+          )
+        }
+
+        <div>
+
+        </div>
       </div>
       
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
         * {
             font-family: 'Inter', sans-serif;
-        }
-        
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        
-        .animate-fadeIn {
-          animation: fadeIn 0.2s ease-out;
-        }
-        
-        .animate-scaleIn {
-          animation: scaleIn 0.25s ease-out;
         }
       `}</style>
     </div>
