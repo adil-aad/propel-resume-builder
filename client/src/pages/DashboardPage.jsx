@@ -40,6 +40,13 @@ const Dashboard = () => {
     event.preventDefault()
   }
 
+  const deleteResume = async (resumeId) => {
+    const confirm = window.confirm('Are you sure you want to delete this resume?')
+    if(confirm){
+      setAllResumes(prev => prev.filter(resume => resume._id !== resumeId))
+    }
+  }
+
   useEffect(()=>{
     loadAllResumes()
   }, [])
@@ -99,7 +106,7 @@ const Dashboard = () => {
                     <PencilIcon onClick={()=>{setEditResumeId(resume._id); setTitle(resume.title)}} className='size-3.5 text-gray-500 hover:text-cyan-600'/>
                   </button>
                   <button className='p-1.5 rounded-lg hover:bg-gray-100 transition-colors'>
-                    <Trash className='size-3.5 text-gray-500 hover:text-red-500'/>
+                    <Trash onClick={()=>deleteResume(resume._id)} className='size-3.5 text-gray-500 hover:text-red-500'/>
                   </button>
                 </div>
                 
