@@ -23,12 +23,16 @@ const Dashboard = () => {
   const createResume = async (event) => {
     event.preventDefault()
     setshowCreateResume(false)
+    setTitle('')
     navigate(`/app/builder/res123`)
   }
 
   const uploadResume = async (event) => {
     event.preventDefault()
+    if (!resume) return
     setshowUploadResume(false)
+    setTitle('')
+    setResume(null)
     navigate(`/app/builder/res123`)
   }
 
@@ -54,7 +58,7 @@ const Dashboard = () => {
             </div>
           </button>
           
-          <button className='w-full bg-white sm:max-w-40 h-52 flex flex-col items-center justify-center rounded-2xl gap-3 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-100 hover:border-purple-200'>
+          <button onClick={()=>setshowUploadResume(true)} className='w-full bg-white sm:max-w-40 h-52 flex flex-col items-center justify-center rounded-2xl gap-3 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-100 hover:border-purple-200'>
             <div className='size-14 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-md shadow-purple-200 flex items-center justify-center group-hover:scale-110 transition-all duration-300'>
               <UploadCloudIcon className='size-7 text-white'/>
             </div>
@@ -75,7 +79,7 @@ const Dashboard = () => {
           {allResumes.map((resume, index)=> {
             const baseColor = colors[index % colors.length]
             return (
-              <div key={index} className='relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group border border-gray-100 hover:border-gray-200 overflow-hidden'>
+              <div key={index} onClick={()=> navigate(`/app/builder/${resume._id}`)} className='relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group border border-gray-100 hover:border-gray-200 overflow-hidden'>
                 <button className='w-full pt-8 pb-6 flex flex-col items-center justify-center gap-3 cursor-pointer'>
                   <div className='size-12 rounded-xl flex items-center justify-center' style={{backgroundColor: baseColor + '15'}}>
                     <FilePenLineIcon className='size-6' style={{color: baseColor}}/>
@@ -108,7 +112,7 @@ const Dashboard = () => {
               <div onClick={e => e.stopPropagation()} className='relative bg-slate-50 border shadow-md rounded-lg w-full max-w-sm p-6'>
                 <h2 className='text-xl font-bold mb-4'>Create a Resume</h2>
                 <input onChange={(e)=> setTitle(e.target.value)} value={title} type="text" placeholder='Enter Resume Title' className='w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600' required />
-                <button onClick={()=>setshowUploadResume(true)} className='w-full py-2 bg-green-600 text-white rounded hover:bg-green-700
+                <button type="submit" className='w-full py-2 bg-green-600 text-white rounded hover:bg-green-700
                 transition-colors'>Create Resume</button>
                 <XIcon className='absolute top-4 right-4 text-slate-400 hover:text-slate-600
                 cursor-pointer transition-colors' onClick={()=>{setshowCreateResume(false); setTitle('')}}/>
@@ -129,6 +133,14 @@ const Dashboard = () => {
                 <div>
                   <label htmlFor="resume" className='block text-sm text-slate-700'>
                     Select Resume File
+                    <input
+                      id="resume"
+                      type="file"
+                      accept=".pdf"
+                      className="hidden"
+                      onChange={(e) => setResume(e.target.files?.[0] || null)}
+                      required
+                    />
                     <div className='flex flex-col items-center justify-center gap-2 border group text-slate-400 border-slate-400
                     border-dashed rounded-md p-4 py-10 my-4 hover:border-green-500 hover:text-green-700 cursor-pointer transition-colors'> 
                       {
@@ -144,10 +156,10 @@ const Dashboard = () => {
                     </div>
                   </label>
                 </div>
-                <button className='w-full py-2 bg-green-600 text-white rounded hover:bg-green-700
+                <button type="submit" className='w-full py-2 bg-green-600 text-white rounded hover:bg-green-700
                 transition-colors'>Create Resume</button>
                 <XIcon className='absolute top-4 right-4 text-slate-400 hover:text-slate-600
-                cursor-pointer transition-colors' onClick={()=>{setshowUploadResume(false); setTitle('')}}/>
+                cursor-pointer transition-colors' onClick={()=>{setshowUploadResume(false); setTitle(''); setResume(null)}}/>
               </div>
 
             </form>
