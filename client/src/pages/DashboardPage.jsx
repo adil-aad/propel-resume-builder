@@ -36,6 +36,10 @@ const Dashboard = () => {
     navigate(`/app/builder/res123`)
   }
 
+  const editTitle = async (event) => {
+    event.preventDefault()
+  }
+
   useEffect(()=>{
     loadAllResumes()
   }, [])
@@ -90,9 +94,9 @@ const Dashboard = () => {
                   </div>
                 </button>
                 
-                <div className='absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200'>
+                <div onClick={e => e.stopPropagation()} className='absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200'>
                   <button className='p-1.5 rounded-lg hover:bg-gray-100 transition-colors'>
-                    <PencilIcon className='size-3.5 text-gray-500 hover:text-cyan-600'/>
+                    <PencilIcon onClick={()=>{setEditResumeId(resume._id); setTitle(resume.title)}} className='size-3.5 text-gray-500 hover:text-cyan-600'/>
                   </button>
                   <button className='p-1.5 rounded-lg hover:bg-gray-100 transition-colors'>
                     <Trash className='size-3.5 text-gray-500 hover:text-red-500'/>
