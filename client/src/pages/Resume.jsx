@@ -29,14 +29,19 @@ const Resume = () => {
     }
   }
 
+  const [activeSectionIndex, setActiveSectionIndex] = useState(0)
+  const [removeBackground, setRemoveBackground] = useState(false)
+
   const sections = [
     {id: "personal", name: "Personal Info", icon: User},
     {id: "summary", name: "Summary", icon: FileText},
     {id: "experience", name: "Experience", icon: Briefcase},
     {id: "education", name: "Education", icon: GraduationCap},
-    {id: "projects", name: "Projects", icon: FolderIcon}
+    {id: "projects", name: "Projects", icon: FolderIcon},
     {id: "skills", name: "Skills", icon: Sparkles}
   ]
+
+  const activeSection = sections[activeSectionIndex]
 
   useEffect(()=>{
     loadExsistingResume()
