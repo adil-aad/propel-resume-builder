@@ -79,6 +79,12 @@ const Resume = () => {
                   }`} disabled={activeSectionIndex === sections.length-1}>
                     <ChevronRight className='size-4'/> Next</button>
               </div>
+                {/* Form Content*/}
+              <div className='space-y-6'>
+                {activeSection.id === 'personal' && (
+                  <div></div>
+                )}
+              </div>
             </div>
 
           </div>
