@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
-import { ArrowLeftIcon, Briefcase, ChevronLeft, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
+import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
 
 const Resume = () => {
 
@@ -68,10 +68,16 @@ const Resume = () => {
                 <div></div>
                 <div className='flex items-center'></div>
                 {activeSectionIndex !== 0 && (
-                  <button onClick={()=> setActiveSectionIndex((prevIndex)=> Math.max(prevIndex -1, 0))} className='flex items-center gap-1 p-3 rounded-lg text-sm font-medium
+                  <button onClick={()=> setActiveSectionIndex((prevIndex)=> Math.max(prevIndex - 1, 0))} className='flex items-center gap-1 p-3 rounded-lg text-sm font-medium
                   text-gray-600 hover:bg-gray-50 transition-all' disabled={activeSectionIndex === 0}>
                     <ChevronLeft className='size-4'/> Previous</button>
                 )}
+
+                <button onClick={()=> setActiveSectionIndex((prevIndex)=> Math.min(prevIndex + 1, sections.length-1))} className={`flex items-center gap-1 p-3 rounded-lg
+                  text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all ${activeSectionIndex === sections.length -1 &&
+                    'opacity-50'
+                  }`} disabled={activeSectionIndex === sections.length-1}>
+                    <ChevronRight className='size-4'/> Next</button>
               </div>
             </div>
 
