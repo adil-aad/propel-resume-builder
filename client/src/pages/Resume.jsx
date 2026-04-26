@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
-import { ArrowLeftIcon, Briefcase, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
+import { ArrowLeftIcon, Briefcase, ChevronLeft, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
 
 const Resume = () => {
 
@@ -63,6 +63,16 @@ const Resume = () => {
               <hr className='absolute top-0 left-0 right-0 border-2 border-gray-200'/>
               <hr className='absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600 border-none
               transition-all duration-2000' style={{width: `${activeSectionIndex * 100 / (sections/length -1)}%`}}/>
+
+              <div className='flex justify-between items-center mb-6 border-b border-gray-300 py-1'>
+                <div></div>
+                <div className='flex items-center'></div>
+                {activeSectionIndex !== 0 && (
+                  <button onClick={()=> setActiveSectionIndex((prevIndex)=> Math.max(prevIndex -1, 0))} className='flex items-center gap-1 p-3 rounded-lg text-sm font-medium
+                  text-gray-600 hover:bg-gray-50 transition-all' disabled={activeSectionIndex === 0}>
+                    <ChevronLeft className='size-4'/> Previous</button>
+                )}
+              </div>
             </div>
 
           </div>
