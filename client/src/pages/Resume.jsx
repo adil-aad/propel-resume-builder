@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
-import { ArrowLeftIcon } from 'lucide-react'
+import { ArrowLeftIcon, Briefcase, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
 
 const Resume = () => {
 
@@ -29,6 +29,15 @@ const Resume = () => {
     }
   }
 
+  const sections = [
+    {id: "personal", name: "Personal Info", icon: User},
+    {id: "summary", name: "Summary", icon: FileText},
+    {id: "experience", name: "Experience", icon: Briefcase},
+    {id: "education", name: "Education", icon: GraduationCap},
+    {id: "projects", name: "Projects", icon: FolderIcon}
+    {id: "skills", name: "Skills", icon: Sparkles}
+  ]
+
   useEffect(()=>{
     loadExsistingResume()
   }, [])
@@ -38,6 +47,20 @@ const Resume = () => {
         <Link to={'/app'} className='inline-flex gap-2 items-center text-slate-500 hover:text-slate-700 transition-all'>
           <ArrowLeftIcon className='size-4'/> Back to DashBoard
         </Link>
+      </div>
+
+      <div className='max-w-7xl mx-auto px-4 pb-8'>
+        <div className='grid lg:grid-cols-12 gap-10'> 
+          {/* Left Panel*/}
+          <div>
+
+          </div>
+
+          {/* Right panel*/}
+          <div>
+
+          </div>
+        </div>
       </div>
     </div>
   )
