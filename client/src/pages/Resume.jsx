@@ -94,7 +94,13 @@ const Resume = () => {
           </div>
 
           {/* Right panel*/}
-          <div>
+          <div className=''>
+            <div>
+              {/* buttons*/}
+
+            </div>
+
+            { /*Resume Preview */}
 
           </div>
         </div>
