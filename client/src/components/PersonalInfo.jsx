@@ -4,7 +4,7 @@ import React from 'react'
 const PersonalInfo = ({data, onChange, removeBackground, setRemoveBackground}) => {
 
     const handleChange = (field, value) =>{
-        onChange({...data, [filed]: value})
+        onChange({...data, [field]: value})
     }
   return (
     <div>
