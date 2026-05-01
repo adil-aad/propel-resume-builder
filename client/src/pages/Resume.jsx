@@ -63,7 +63,7 @@ const Resume = () => {
               {/* progress bar*/}
               <hr className='absolute top-0 left-0 right-0 border-2 border-gray-200'/>
               <hr className='absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600 border-none
-              transition-all duration-2000' style={{width: `${activeSectionIndex * 100 / (sections/length -1)}%`}}/>
+              transition-all duration-2000' style={{width: `${activeSectionIndex * 100 / (sections.length - 1)}%`}}/>
 
               <div className='flex justify-between items-center mb-6 border-b border-gray-300 py-1'>
                 <div></div>

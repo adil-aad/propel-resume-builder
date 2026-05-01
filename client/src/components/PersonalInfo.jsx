@@ -1,4 +1,4 @@
-import { BriefcaseBusiness, Globe, Mail, MapPin, User } from 'lucide-react'
+import { BriefcaseBusiness, Globe, Mail, MapPin, Phone, User } from 'lucide-react'
 import React from 'react'
 
 const PersonalInfo = ({data, onChange, removeBackground, setRemoveBackground}) => {
@@ -13,7 +13,7 @@ const PersonalInfo = ({data, onChange, removeBackground, setRemoveBackground}) =
         {key: 'phone', label: 'Phone Number', icon: Phone, type: "tel"},
         {key: 'location', label: 'Location', icon: MapPin, type: "text"},
         {key: 'profession', label: 'Profession', icon: BriefcaseBusiness, type: "text"},
-        {key: 'linkedin', label: 'LinkedIn Profile', icon: Linkedin, type: "url"},
+        {key: 'linkedin', label: 'LinkedIn Profile', icon: Globe, type: "url"},
         {key: 'website', label: 'personal Website', icon: Globe, type: "url"},
     ]
   return (
@@ -25,12 +25,12 @@ const PersonalInfo = ({data, onChange, removeBackground, setRemoveBackground}) =
             <label>
                 {data.image ? (
                     <img src={typeof data.image == 'string' ?
-                         data.image : URL.createObjectURL(data.image)} alt="image" className='w-13 h-13
-                         rounded-full onject-cover mt-5 ring ring-slate-300 hover:opacity-80'/>
+                         data.image : URL.createObjectURL(data.image)} alt="image" className='mt-5 h-16 w-16
+                         rounded-full object-cover ring-2 ring-slate-200 transition hover:opacity-90'/>
                 ): (
-                    <div className='inline-flex items-center gap-2 mt-5 text-slate-600
-                     hover:text-slate-700 cursor-pointer'>
-                        <User className='size-10 p-2.5 border rounded-full'/>
+                    <div className='mt-5 inline-flex cursor-pointer items-center gap-3 text-slate-600
+                     transition hover:text-slate-800'>
+                        <User className='h-12 w-12 rounded-full border border-slate-300 p-2.5'/>
                         Upload User Image
                     </div>
                 )}
@@ -39,17 +39,17 @@ const PersonalInfo = ({data, onChange, removeBackground, setRemoveBackground}) =
             </label>
 
             {typeof data.image === 'object' && (
-                <div className='flex flex-col gap-1 lp-4 text-sm'>
+                <div className='flex flex-col gap-1 pl-4 text-sm text-slate-700'>
                     <p>Remove Background</p>
-                    <label className='relative inline-flex items-center cursor-pointer tetx-gray-900 gap-3'>
+                    <label className='relative inline-flex items-center gap-3 cursor-pointer text-slate-900'>
                         <input type="checkbox" className='sr-only peer' onChange={()=>setRemoveBackground(prev => !prev)} checked={removeBackground} />
 
-                        <div className='w-9 h-5 bg-slate-300 rounded-full peer peer-checked:bg-green-600
+                        <div className='h-5 w-9 rounded-full bg-slate-300 peer-checked:bg-green-600
                         transition-colors duration-200'>
 
                         </div>
 
-                        <span className='dot absolute left-1 top-1 w-3 h-3 bg-white rounded-full
+                        <span className='absolute left-1 top-1 h-3 w-3 rounded-full bg-white
                         transition-transform duration-200 ease-in-out peer-checked:translate-x-4'></span>
 
                     </label>
@@ -68,7 +68,7 @@ const PersonalInfo = ({data, onChange, removeBackground, setRemoveBackground}) =
                     </label>
 
                     <input type={field.type} value={data[field.key] || ""}
-                    onChange={(e)=>handleChange(field.key, e.target.value)} className=''/>
+                    onChange={(e)=>handleChange(field.key, e.target.value)} className='w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200'/>
 
                 </div>
             )
