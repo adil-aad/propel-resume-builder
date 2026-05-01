@@ -57,7 +57,22 @@ const PersonalInfo = ({data, onChange, removeBackground, setRemoveBackground}) =
             )}
 
         </div>
+        {fields.map((field)=>{
+            const Icon = field.icon;
+            return (
+                <div key={field.key} className='space-y-2 mt-5'>
+                    <label className='flex items-center gap-2 text-sm font-medium text-gray-600'>
+                        <Icon className='size-4'/>
+                        {field.label}
+                        {field.required && <span className='text-red-500'>*</span>}
+                    </label>
 
+                    <input type={field.type} value={data[field.key] || ""}
+                    onChange={(e)=>handleChange(field.key, e.target.value)} className=''/>
+
+                </div>
+            )
+        })}
 
     </div>
   )
