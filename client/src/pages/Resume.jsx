@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
 import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
 import PersonalInfo from '../components/PersonalInfo'
+import ResumePreview from '../components/ResumePreview'
 
 const Resume = () => {
 
@@ -94,14 +95,32 @@ const Resume = () => {
           </div>
 
           {/* Right panel*/}
-          <div className=''>
-            <div>
-              {/* buttons*/}
+          <div className='lg:col-span-7'>
+            <div className='space-y-4 lg:sticky lg:top-6'>
+              <div className='rounded-3xl border border-slate-200 bg-white px-5 py-4 shadow-sm'>
+                <div className='flex flex-wrap items-center justify-between gap-3'>
+                  <div>
+                    <p className='text-xs font-semibold uppercase tracking-[0.24em] text-slate-400'>Preview Panel</p>
+                    <h2 className='text-lg font-semibold text-slate-900'>{resumeData.title || 'Untitled Resume'}</h2>
+                  </div>
+                  <div className='flex items-center gap-3 text-sm text-slate-500'>
+                    <span className='rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700'>
+                      {resumeData.template}
+                    </span>
+                    <span className='inline-flex items-center gap-2'>
+                      <span className='h-3 w-3 rounded-full border border-white shadow-sm' style={{ backgroundColor: resumeData.accent_color }} />
+                      {resumeData.accent_color}
+                    </span>
+                  </div>
+                </div>
+              </div>
 
+              <ResumePreview
+                data={resumeData}
+                template={resumeData.template}
+                accentColor={resumeData.accent_color}
+              />
             </div>
-
-            { /*Resume Preview */}
-
           </div>
         </div>
       </div>

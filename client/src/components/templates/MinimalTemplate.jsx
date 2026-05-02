@@ -1,19 +1,17 @@
-
 const MinimalTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
         if (!dateStr) return "";
         const [year, month] = dateStr.split("-");
         return new Date(year, month - 1).toLocaleDateString("en-US", {
             year: "numeric",
-            month: "short"
+            month: "short",
         });
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-8 bg-white text-gray-900 font-light">
-            {/* Header */}
+        <div className="mx-auto max-w-4xl bg-white p-8 font-light text-gray-900">
             <header className="mb-10">
-                <h1 className="text-4xl font-thin mb-4 tracking-wide">
+                <h1 className="mb-4 text-4xl font-thin tracking-wide">
                     {data.personal_info?.full_name || "Your Name"}
                 </h1>
 
@@ -30,34 +28,30 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 </div>
             </header>
 
-            {/* Professional Summary */}
             {data.professional_summary && (
                 <section className="mb-10">
-                    <p className=" text-gray-700">
-                        {data.professional_summary}
-                    </p>
+                    <p className="text-gray-700">{data.professional_summary}</p>
                 </section>
             )}
 
-            {/* Experience */}
             {data.experience && data.experience.length > 0 && (
                 <section className="mb-10">
-                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                    <h2 className="mb-6 text-sm font-medium uppercase tracking-widest" style={{ color: accentColor }}>
                         Experience
                     </h2>
 
                     <div className="space-y-6">
                         {data.experience.map((exp, index) => (
                             <div key={index}>
-                                <div className="flex justify-between items-baseline mb-1">
+                                <div className="mb-1 flex items-baseline justify-between">
                                     <h3 className="text-lg font-medium">{exp.position}</h3>
                                     <span className="text-sm text-gray-500">
                                         {formatDate(exp.start_date)} - {exp.is_current ? "Present" : formatDate(exp.end_date)}
                                     </span>
                                 </div>
-                                <p className="text-gray-600 mb-2">{exp.company}</p>
+                                <p className="mb-2 text-gray-600">{exp.company}</p>
                                 {exp.description && (
-                                    <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                                    <div className="whitespace-pre-line leading-relaxed text-gray-700">
                                         {exp.description}
                                     </div>
                                 )}
@@ -67,17 +61,16 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Projects */}
             {data.project && data.project.length > 0 && (
                 <section className="mb-10">
-                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                    <h2 className="mb-6 text-sm font-medium uppercase tracking-widest" style={{ color: accentColor }}>
                         Projects
                     </h2>
 
                     <div className="space-y-4">
                         {data.project.map((proj, index) => (
-                            <div key={index} className="flex flex-col gap-2 justify-between items-baseline">
-                                <h3 className="text-lg font-medium ">{proj.name}</h3>
+                            <div key={index} className="flex flex-col items-baseline justify-between gap-2">
+                                <h3 className="text-lg font-medium">{proj.name}</h3>
                                 <p className="text-gray-600">{proj.description}</p>
                             </div>
                         ))}
@@ -85,16 +78,15 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Education */}
             {data.education && data.education.length > 0 && (
                 <section className="mb-10">
-                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                    <h2 className="mb-6 text-sm font-medium uppercase tracking-widest" style={{ color: accentColor }}>
                         Education
                     </h2>
 
                     <div className="space-y-4">
                         {data.education.map((edu, index) => (
-                            <div key={index} className="flex justify-between items-baseline">
+                            <div key={index} className="flex items-baseline justify-between">
                                 <div>
                                     <h3 className="font-medium">
                                         {edu.degree} {edu.field && `in ${edu.field}`}
@@ -111,20 +103,19 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Skills */}
             {data.skills && data.skills.length > 0 && (
                 <section>
-                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                    <h2 className="mb-6 text-sm font-medium uppercase tracking-widest" style={{ color: accentColor }}>
                         Skills
                     </h2>
 
                     <div className="text-gray-700">
-                        {data.skills.join(" • ")}
+                        {data.skills.join(" * ")}
                     </div>
                 </section>
             )}
         </div>
     );
-}
+};
 
 export default MinimalTemplate;
