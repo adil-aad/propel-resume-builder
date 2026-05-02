@@ -1,35 +1,46 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import React from 'react'
 
 const NavBar = () => {
-    const user = {name: 'john doe'}
+    const user = { name: 'john doe' }
     const navigate = useNavigate()
-    const logoutUser = ()=>{
+
+    const logoutUser = () => {
         navigate('/')
     }
-  return (
-    <div className='bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-b border-white/10'>
-        <nav className='flex items-center justify-between max-w-7xl mx-auto px-4 py-3.5 transition-all'>
-            <Link to='/' className='flex items-center gap-2'>
-                <div className='w-8 h-8 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-lg rotate-45'></div>
-                <span className='font-bold text-xl bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent'>ResumeForge</span>
-            </Link>
-            <div className='flex items-center gap-4 text-sm'>
-                <p className='max-sm:hidden text-gray-300'>Hi, {user?.name}</p>
-                <button onClick={logoutUser} className='bg-gradient-to-r from-cyan-500 to-purple-600 hover:shadow-lg hover:shadow-purple-500/25 text-white px-7 py-1.5 rounded-full active:scale-95 transition-all duration-300'>
-                    Logout
-                </button>
-            </div>
-        </nav>
-        
-        <style>{`
-            @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
-            * {
-                font-family: 'Inter', sans-serif;
-            }
-        `}</style>
-    </div>
-  )
+
+    return (
+        <div className='border-b border-slate-900/10 bg-[#f3efe7]/90 backdrop-blur-md'>
+            <nav className='mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8'>
+                <Link to='/' className='flex items-center gap-3'>
+                    <div className='h-8 w-8 rotate-12 rounded-lg bg-slate-950'></div>
+                    <div>
+                        <p className='text-[10px] font-medium uppercase tracking-[0.24em] text-slate-400'>Workspace</p>
+                        <span className='text-xl font-bold tracking-tight text-slate-950'>ResumeForge</span>
+                    </div>
+                </Link>
+
+                <div className='flex items-center gap-3 text-sm'>
+                    <div className='hidden rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-slate-600 sm:block'>
+                        Hi, <span className='font-semibold capitalize text-slate-900'>{user?.name}</span>
+                    </div>
+                    <button
+                        onClick={logoutUser}
+                        className='rounded-full bg-slate-950 px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-95'
+                    >
+                        Logout
+                    </button>
+                </div>
+            </nav>
+
+            <style>{`
+                @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+                * {
+                    font-family: 'Space Grotesk', sans-serif;
+                }
+            `}</style>
+        </div>
+    )
 }
 
 export default NavBar
