@@ -1,14 +1,17 @@
 import React from 'react'
 
-const Title = ({ title, description }) => {
+const Title = ({ title, description, align = 'center' }) => {
+    const isLeft = align === 'left'
+
     return (
-        <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-                <span className="bg-gradient-to-r from-cyan-400 via-white to-purple-400 bg-clip-text text-transparent">
-                    {title}
-                </span>
+        <div className={`${isLeft ? 'text-left' : 'text-center'} mb-12`}>
+            <p className="text-xs font-medium uppercase tracking-[0.28em] text-slate-400">
+                ResumeForge
+            </p>
+            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-900 md:text-5xl lg:text-6xl">
+                {title}
             </h2>
-            <p className="max-w-2xl mx-auto text-cyan-100/90 text-lg leading-relaxed">
+            <p className={`mt-4 text-lg leading-8 text-slate-600 ${isLeft ? 'max-w-2xl' : 'mx-auto max-w-2xl'}`}>
                 {description}
             </p>
         </div>

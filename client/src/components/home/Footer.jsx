@@ -1,85 +1,61 @@
-import React from "react";
+import React from "react"
 
 const Footer = () => {
     return (
         <>
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
                 * {
-                    font-family: 'Inter', sans-serif;
+                    font-family: 'Space Grotesk', sans-serif;
                 }
             `}</style>
-            
-            <footer className="flex flex-wrap justify-center lg:justify-between overflow-hidden gap-10 md:gap-20 py-16 px-6 md:px-12 lg:px-20 text-[13px] text-gray-400 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-t border-white/10">
-                <div className="flex flex-wrap items-start gap-10 md:gap-[60px] xl:gap-[140px]">
-                    <a href="#">
-                        <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-lg rotate-45"></div>
-                            <span className="font-bold text-xl bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">ResumeForge</span>
+
+            <footer className="border-t border-slate-900/10 bg-[#ece6dc] px-6 py-16 text-[13px] text-slate-500 md:px-12 lg:px-20">
+                <div className="mx-auto flex max-w-7xl flex-col gap-10 lg:flex-row lg:justify-between">
+                    <div className="flex flex-col gap-5">
+                        <a href="/" className="flex items-center gap-3">
+                            <div className="h-8 w-8 rotate-12 rounded-lg bg-slate-950"></div>
+                            <span className="text-xl font-bold text-slate-950">ResumeForge</span>
+                        </a>
+                        <p className="max-w-sm text-sm leading-6 text-slate-600">
+                            A cleaner way to write, preview, and manage professional resumes without losing track of your drafts.
+                        </p>
+                    </div>
+
+                    <div className="grid gap-8 sm:grid-cols-3">
+                        <div>
+                            <p className="text-sm font-semibold text-slate-900">Product</p>
+                            <ul className="mt-3 space-y-2">
+                                <li><a href="/" className="transition hover:text-slate-950">Home</a></li>
+                                <li><a href="#features" className="transition hover:text-slate-950">Features</a></li>
+                                <li><a href="#cta" className="transition hover:text-slate-950">Get Started</a></li>
+                            </ul>
                         </div>
-                    </a>
-                    <div>
-                        <p className="text-white font-semibold text-sm">Product</p>
-                        <ul className="mt-3 space-y-2">
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">Home</a></li>
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">Support</a></li>
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">Pricing</a></li>
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">Affiliate</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <p className="text-white font-semibold text-sm">Resources</p>
-                        <ul className="mt-3 space-y-2">
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">Company</a></li>
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">Blogs</a></li>
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">Community</a></li>
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">Careers <span className="text-xs bg-gradient-to-r from-cyan-500 to-purple-600 rounded-md ml-2 px-2 py-1 text-white">We're hiring!</span></a></li>
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">About</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <p className="text-white font-semibold text-sm">Legal</p>
-                        <ul className="mt-3 space-y-2">
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">Privacy</a></li>
-                            <li><a href="/" className="hover:text-cyan-400 transition-colors">Terms</a></li>
-                        </ul>
+                        <div>
+                            <p className="text-sm font-semibold text-slate-900">Resources</p>
+                            <ul className="mt-3 space-y-2">
+                                <li><a href="/" className="transition hover:text-slate-950">Support</a></li>
+                                <li><a href="/" className="transition hover:text-slate-950">Community</a></li>
+                                <li><a href="/" className="transition hover:text-slate-950">About</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p className="text-sm font-semibold text-slate-900">Legal</p>
+                            <ul className="mt-3 space-y-2">
+                                <li><a href="/" className="transition hover:text-slate-950">Privacy</a></li>
+                                <li><a href="/" className="transition hover:text-slate-950">Terms</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div className="flex flex-col max-md:items-center max-md:text-center gap-2 items-end">
-                    <p className="max-w-60 text-gray-400 text-sm">Making every customer feel valued—no matter the size of your audience.</p>
-                    <div className="flex items-center gap-4 mt-3">
-                        <a href="https://dribbble.com/prebuiltui" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-5" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"></path>
-                                <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"></path>
-                                <path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"></path>
-                            </svg>
-                        </a>
-                        <a href="https://www.linkedin.com/company/prebuiltui" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-5" aria-hidden="true">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect width="4" height="12" x="2" y="9"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
-                        <a href="https://x.com/prebuiltui" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-5" aria-hidden="true">
-                                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                            </svg>
-                        </a>
-                        <a href="https://www.youtube.com/@prebuiltui" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-6" aria-hidden="true">
-                                <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
-                                <path d="m10 15 5-3-5-3z"></path>
-                            </svg>
-                        </a>
-                    </div>
-                    <p className="mt-3 text-center text-gray-500 text-xs">© 2025 ResumeForge</p>
+
+                <div className="mx-auto mt-10 flex max-w-7xl flex-col gap-3 border-t border-slate-900/10 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+                    <p>Built for job seekers who want clarity, speed, and a stronger first impression.</p>
+                    <p>Copyright 2026 ResumeForge</p>
                 </div>
             </footer>
         </>
-    );
-};
+    )
+}
 
-export default Footer;
+export default Footer

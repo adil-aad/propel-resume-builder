@@ -2,15 +2,15 @@ import React from 'react'
 
 const Banner = () => {
   return (
-    <div className="w-full py-2.5 font-medium text-sm text-center bg-white/5 backdrop-blur-sm border-b border-white/10">
-        <p>
-          <span className="px-3 py-1 rounded-full text-xs font-semibold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 mr-2">
-            New
-          </span>
-          <span className="text-gray-300">AI Feature</span>
-        </p> 
+    <div className="w-full border-b border-slate-900/10 bg-[#f3efe7] py-3 text-center text-sm">
+      <p className="px-4 text-slate-600">
+        <span className="mr-2 rounded-full bg-slate-950 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-white">
+          New
+        </span>
+        Resume imports, live previews, and richer builder layouts are now part of the workflow.
+      </p>
     </div>
   )
 }
 
-export default Banner;
+export default Banner

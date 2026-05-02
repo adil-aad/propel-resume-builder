@@ -1,67 +1,103 @@
 import React from "react"
-import {Zap} from 'lucide-react'
-import Title from "./Title";
+import { FileText, LayoutTemplate, Sparkles, UploadCloud, WandSparkles, Zap } from 'lucide-react'
+import Title from "./Title"
 
 const Features = () => {
-    const [isHover, setIsHover] = React.useState(false);
+    const features = [
+        {
+            icon: FileText,
+            title: 'Focused resume writing',
+            description: 'Capture summaries, experience, education, and skills in a builder that keeps every section easy to scan and refine.',
+            accent: 'bg-[#fff4ea] text-[#f97316]',
+        },
+        {
+            icon: UploadCloud,
+            title: 'Import existing PDFs',
+            description: 'Pull a current resume into your workflow so you can continue from what you already have instead of starting over.',
+            accent: 'bg-[#e8faf4] text-[#0f766e]',
+        },
+        {
+            icon: LayoutTemplate,
+            title: 'Template-driven previews',
+            description: 'Switch between polished layouts and watch the resume update live while you edit your content.',
+            accent: 'bg-[#eef6ff] text-[#2563eb]',
+        },
+        {
+            icon: WandSparkles,
+            title: 'Cleaner presentation',
+            description: 'Pair strong typography, balanced spacing, and modern accents with ATS-friendly structure that still feels personal.',
+            accent: 'bg-[#f7efff] text-[#7c3aed]',
+        },
+    ]
 
     return (
-        <div id="features" className="flex flex-col items-center py-20 px-6 md:px-12 lg:px-20 scroll-mt-16 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <section id="features" className="bg-[#f3efe7] px-6 py-20 md:px-12 lg:px-20">
+            <div className="mx-auto max-w-7xl">
+                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-sm font-medium text-slate-700 backdrop-blur-sm">
+                    <Zap width={14} className="text-orange-500"/>
+                    Built for a smoother resume workflow
+                </div>
 
-            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-                <Zap width={14} className="text-cyan-400"/>
-                <span className="text-sm font-medium text-gray-200">Simple Process</span>
-            </div>
+                <Title
+                    title='Everything stays clear from draft to final preview'
+                    description='ResumeForge combines guided editing, quick imports, and live template previews so you can focus on better content instead of fighting the interface.'
+                    align='left'
+                />
 
-            <Title 
-                title='Build your resume' 
-                description='Build standout, ATS-friendly resumes in minutes with smart AI suggestions, polished templates, and effortless customization'
-            />
-            
-            <div className="flex flex-col md:flex-row items-center justify-center xl:-mt-10">
-                <img className="max-w-2xl w-full xl:-ml-32 opacity-80" src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/features/group-image-1.png" alt="" />
-                
-                <div className="px-4 md:px-0" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-                    <div className={"flex items-center justify-center gap-6 max-w-md group cursor-pointer"}>
-                        <div className={`p-6 rounded-xl border transition-all duration-300 backdrop-blur-sm ${!isHover ? 'bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 border-cyan-500/30 shadow-xl' : 'group-hover:bg-gradient-to-br group-hover:from-cyan-500/30 group-hover:to-cyan-600/20 group-hover:border-cyan-400/40 group-hover:shadow-cyan-500/20 group-hover:-translate-y-1'} flex gap-4`}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-6 text-cyan-400"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" /><circle cx="16.5" cy="7.5" r=".5" fill="currentColor" /></svg>
-                            <div className="space-y-2">
-                                <h3 className="text-base font-semibold text-white">Real-Time Analytics</h3>
-                                <p className="text-sm text-gray-300 max-w-xs">Get instant insights into your finances with live dashboards.</p>
+                <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+                    <div className="rounded-[32px] border border-slate-900/10 bg-slate-950 p-6 text-white shadow-[0_30px_90px_-45px_rgba(15,23,42,0.7)]">
+                        <div className="flex items-center justify-between gap-4">
+                            <div>
+                                <p className="text-xs uppercase tracking-[0.26em] text-white/45">Workflow</p>
+                                <h3 className="mt-2 text-3xl font-semibold">A builder that feels organized from the first click.</h3>
                             </div>
+                            <div className="hidden h-16 w-16 rounded-2xl bg-white/10 lg:block" />
+                        </div>
+
+                        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                            {features.map((feature, index) => {
+                                const Icon = feature.icon
+                                return (
+                                    <div key={index} className="rounded-[26px] border border-white/10 bg-white/5 p-5 transition hover:-translate-y-1 hover:bg-white/10">
+                                        <div className={`inline-flex size-12 items-center justify-center rounded-2xl ${feature.accent}`}>
+                                            <Icon className="size-5" />
+                                        </div>
+                                        <h4 className="mt-4 text-lg font-semibold text-white">{feature.title}</h4>
+                                        <p className="mt-2 text-sm leading-6 text-slate-300">{feature.description}</p>
+                                    </div>
+                                )
+                            })}
                         </div>
                     </div>
-                    
-                    <div className="flex items-center justify-center gap-6 max-w-md group cursor-pointer">
-                        <div className="p-6 rounded-xl border transition-all duration-300 backdrop-blur-sm bg-gradient-to-br from-purple-500/20 to-purple-600/10 border-purple-500/30 shadow-xl group-hover:bg-gradient-to-br group-hover:from-purple-500/30 group-hover:to-purple-600/20 group-hover:border-purple-400/40 group-hover:shadow-purple-500/20 group-hover:-translate-y-1 flex gap-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-6 text-purple-400"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" /></svg>
-                            <div className="space-y-2">
-                                <h3 className="text-base font-semibold text-white">Bank-Grade Security</h3>
-                                <p className="text-sm text-gray-300 max-w-xs">End-to-end encryption, 2FA, compliance with GDPR standards.</p>
+
+                    <div id="workflow" className="rounded-[32px] border border-slate-900/10 bg-white/75 p-6 shadow-[0_24px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-sm">
+                        <div className="flex items-center gap-3">
+                            <div className="inline-flex size-12 items-center justify-center rounded-2xl bg-slate-950 text-white">
+                                <Sparkles className="size-5" />
+                            </div>
+                            <div>
+                                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">How it flows</p>
+                                <h3 className="text-2xl font-semibold text-slate-900">A calm path from idea to application-ready resume.</h3>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-center gap-6 max-w-md group cursor-pointer">
-                        <div className="p-6 rounded-xl border transition-all duration-300 backdrop-blur-sm bg-gradient-to-br from-pink-500/20 to-pink-600/10 border-pink-500/30 shadow-xl group-hover:bg-gradient-to-br group-hover:from-pink-500/30 group-hover:to-pink-600/20 group-hover:border-pink-400/40 group-hover:shadow-pink-500/20 group-hover:-translate-y-1 flex gap-4">
-                            <svg className="size-6 text-pink-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 15V3" /><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /></svg>
-                            <div className="space-y-2">
-                                <h3 className="text-base font-semibold text-white">Customizable Reports</h3>
-                                <p className="text-sm text-gray-300 max-w-xs">Export professional, audit-ready financial reports for tax or internal review.</p>
-                            </div>
+
+                        <div className="mt-8 space-y-4">
+                            {[
+                                ['01', 'Start a fresh draft or upload a PDF you already trust.'],
+                                ['02', 'Edit your personal details and resume sections with live feedback.'],
+                                ['03', 'Review the preview, refine the layout, and keep versions organized in the dashboard.'],
+                            ].map(([step, text]) => (
+                                <div key={step} className="flex gap-4 rounded-[24px] border border-slate-200 bg-[#faf7f2] p-5">
+                                    <div className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">{step}</div>
+                                    <p className="text-sm leading-6 text-slate-700">{text}</p>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
-                * {
-                    font-family: 'Inter', sans-serif;
-                }
-            `}</style>
-        </div>
-    );
-};
+        </section>
+    )
+}
 
-export default Features;
+export default Features

@@ -1,16 +1,35 @@
+import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+
 const GetStarted = () => {
     return (
-        <div id='cda' className='w-full'>
-            <div className="flex flex-col md:flex-row text-center md:text-left items-center justify-between gap-8 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-y border-white/10 py-16 sm:py-20 px-6 md:px-12 lg:px-20">
-                <p className="text-xl md:text-2xl font-semibold max-w-md bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent mx-auto md:mx-0">
-                    Create a Professional Resume In Minutes and Apply With Confidence
-                </p>
-                <a href="https://prebuiltui.com" className="flex items-center gap-2 rounded-full py-3 px-8 bg-gradient-to-r from-cyan-500 to-purple-600 hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 text-white font-medium group mx-auto md:mx-0">
-                    <span>Get Started Free</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
+        <section id='cta' className='w-full bg-[#f3efe7] px-6 pb-20 md:px-12 lg:px-20'>
+            <div className="mx-auto max-w-7xl overflow-hidden rounded-[36px] border border-slate-900/10 bg-slate-950 px-6 py-10 text-white shadow-[0_30px_90px_-45px_rgba(15,23,42,0.75)] sm:px-8 lg:px-10">
+                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                    <div>
+                        <p className="text-xs font-medium uppercase tracking-[0.28em] text-white/45">
+                            Get Started
+                        </p>
+                        <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
+                            Create a sharper resume in minutes and keep every version in one place.
+                        </h2>
+                        <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+                            Whether you are rebuilding from scratch or modernizing an older file, ResumeForge gives you a cleaner system to move faster.
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col gap-4 sm:flex-row lg:justify-end">
+                        <Link to="/app" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#f97316] px-7 py-3 text-base font-semibold text-white transition hover:bg-[#ea580c]">
+                            Start Free
+                            <ArrowRight className="size-4" />
+                        </Link>
+                        <a href="#features" className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-3 text-base font-semibold text-white transition hover:bg-white/10">
+                            View Features
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     )
 }
 
