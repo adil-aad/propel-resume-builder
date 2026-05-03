@@ -14,6 +14,11 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 <h1 className="mb-4 text-4xl font-thin tracking-wide">
                     {data.personal_info?.full_name || "Your Name"}
                 </h1>
+                {data.personal_info?.profession && (
+                    <p className="mb-4 text-sm font-medium uppercase tracking-[0.24em]" style={{ color: accentColor }}>
+                        {data.personal_info.profession}
+                    </p>
+                )}
 
                 <div className="flex flex-wrap gap-6 text-sm text-gray-600">
                     {data.personal_info?.email && <span>{data.personal_info.email}</span>}

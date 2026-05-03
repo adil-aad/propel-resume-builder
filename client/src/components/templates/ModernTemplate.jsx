@@ -17,6 +17,11 @@ const ModernTemplate = ({ data, accentColor }) => {
 				<h1 className="text-4xl font-light mb-3">
 					{data.personal_info?.full_name || "Your Name"}
 				</h1>
+				{data.personal_info?.profession && (
+					<p className="mb-4 text-sm font-medium uppercase tracking-[0.24em] text-white/80">
+						{data.personal_info.profession}
+					</p>
+				)}
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm ">
 					{data.personal_info?.email && (

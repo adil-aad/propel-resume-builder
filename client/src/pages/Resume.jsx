@@ -4,6 +4,7 @@ import { dummyResumeData } from '../assets/assets'
 import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
 import PersonalInfo from '../components/PersonalInfo'
 import ResumePreview from '../components/ResumePreview'
+import TemplateSelector from '../components/TemplateSelector'
 
 const Resume = () => {
 
@@ -114,6 +115,11 @@ const Resume = () => {
                   </div>
                 </div>
               </div>
+
+              <TemplateSelector
+                selectedTemplate={resumeData.template}
+                onChange={(template) => setResumeData((prev) => ({ ...prev, template }))}
+              />
 
               <ResumePreview
                 data={resumeData}
