@@ -1,5 +1,17 @@
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
 
+const LinkedInIcon = ({ className, style }) => (
+	<svg
+		viewBox="0 0 24 24"
+		fill="currentColor"
+		aria-hidden="true"
+		className={className}
+		style={style}
+	>
+		<path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 0 0 3.2 5.03c0 1.12.9 2.03 2.02 2.03h.03a2.03 2.03 0 1 0 0-4.06ZM20.8 12.74c0-3.5-1.87-5.13-4.37-5.13-2.01 0-2.91 1.1-3.41 1.88V8.5H9.64c.05.66 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.12-.93.27-.68.88-1.39 1.9-1.39 1.34 0 1.88 1.02 1.88 2.52V20h3.38v-7.26Z" />
+	</svg>
+)
+
 const ModernTemplate = ({ data, accentColor }) => {
 	const formatDate = (dateStr) => {
 		if (!dateStr) return "";
@@ -44,7 +56,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 					)}
 					{data.personal_info?.linkedin && (
 						<a target="_blank" href={data.personal_info?.linkedin} className="flex items-center gap-2">
-							<Globe className="size-4" />
+							<LinkedInIcon className="size-4" />
 							<span className="break-all text-xs">{data.personal_info.linkedin.split("https://www.")[1] ? data.personal_info.linkedin.split("https://www.")[1] : data.personal_info.linkedin}</span>
 						</a>
 					)}
