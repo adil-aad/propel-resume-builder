@@ -5,6 +5,7 @@ import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FolderIc
 import PersonalInfo from '../components/PersonalInfo'
 import ResumePreview from '../components/ResumePreview'
 import TemplateSelector from '../components/TemplateSelector'
+import ColorPicker from '../components/ColorPicker'
 
 const Resume = () => {
 
@@ -119,6 +120,11 @@ const Resume = () => {
               <TemplateSelector
                 selectedTemplate={resumeData.template}
                 onChange={(template) => setResumeData((prev) => ({ ...prev, template }))}
+              />
+
+              <ColorPicker
+                selectedColor={resumeData.accent_color}
+                onChange={(accent_color) => setResumeData((prev) => ({ ...prev, accent_color }))}
               />
 
               <ResumePreview
