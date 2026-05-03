@@ -5,6 +5,7 @@ import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FolderIc
 import EducaitonForm from '../components/EducaitonForm'
 import ExperienceForm from '../components/ExperienceForm'
 import PersonalInfo from '../components/PersonalInfo'
+import ProjectForm from '../components/ProjectForm'
 import ProffesionalSummary from '../components/ProffesionalSummary'
 import ResumePreview from '../components/ResumePreview'
 import TemplateSelector from '../components/TemplateSelector'
@@ -115,6 +116,13 @@ const Resume = () => {
                   <EducaitonForm
                     data={resumeData.education}
                     onChange={(education) => setResumeData((prev) => ({ ...prev, education }))}
+                  />
+                )}
+
+                {activeSection.id === 'projects' && (
+                  <ProjectForm
+                    data={resumeData.project}
+                    onChange={(project) => setResumeData((prev) => ({ ...prev, project }))}
                   />
                 )}
               </div>
