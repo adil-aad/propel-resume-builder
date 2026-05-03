@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
 import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
+import EducaitonForm from '../components/EducaitonForm'
 import ExperienceForm from '../components/ExperienceForm'
 import PersonalInfo from '../components/PersonalInfo'
 import ProffesionalSummary from '../components/ProffesionalSummary'
@@ -107,6 +108,13 @@ const Resume = () => {
                   <ExperienceForm
                     data={resumeData.experience}
                     onChange={(experience) => setResumeData((prev) => ({ ...prev, experience }))}
+                  />
+                )}
+
+                {activeSection.id === 'education' && (
+                  <EducaitonForm
+                    data={resumeData.education}
+                    onChange={(education) => setResumeData((prev) => ({ ...prev, education }))}
                   />
                 )}
               </div>
