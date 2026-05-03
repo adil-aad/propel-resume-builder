@@ -141,6 +141,13 @@ const EducaitonForm = ({ data, onChange }) => {
         <Plus className='size-4' />
         Add Education
       </button>
+
+      <button
+        type='button'
+        className='mt-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50'
+      >
+        Save Changes
+      </button>
     </div>
   )
 }

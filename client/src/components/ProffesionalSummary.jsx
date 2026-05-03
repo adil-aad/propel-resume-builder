@@ -69,6 +69,13 @@ const ProffesionalSummary = ({ data, onChange }) => {
           className='w-full resize-none rounded-3xl border border-slate-300 bg-white px-4 py-4 text-sm leading-7 text-slate-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-200'
         />
       </div>
+
+      <button
+        type='button'
+        className='mt-6 inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800'
+      >
+        Save Changes
+      </button>
     </div>
   )
 }

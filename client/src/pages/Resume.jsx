@@ -8,6 +8,7 @@ import PersonalInfo from '../components/PersonalInfo'
 import ProjectForm from '../components/ProjectForm'
 import ProffesionalSummary from '../components/ProffesionalSummary'
 import ResumePreview from '../components/ResumePreview'
+import SkillsForm from '../components/SkillsForm'
 import TemplateSelector from '../components/TemplateSelector'
 import ColorPicker from '../components/ColorPicker'
 
@@ -123,6 +124,13 @@ const Resume = () => {
                   <ProjectForm
                     data={resumeData.project}
                     onChange={(project) => setResumeData((prev) => ({ ...prev, project }))}
+                  />
+                )}
+
+                {activeSection.id === 'skills' && (
+                  <SkillsForm
+                    data={resumeData.skills}
+                    onChange={(skills) => setResumeData((prev) => ({ ...prev, skills }))}
                   />
                 )}
               </div>
