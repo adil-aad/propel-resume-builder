@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
 import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
 import PersonalInfo from '../components/PersonalInfo'
+import ProffesionalSummary from '../components/ProffesionalSummary'
 import ResumePreview from '../components/ResumePreview'
 import TemplateSelector from '../components/TemplateSelector'
 import ColorPicker from '../components/ColorPicker'
@@ -90,6 +91,15 @@ const Resume = () => {
                    onChange={(data)=>setResumeData(prev => ({...prev, personal_info: data}))}
                     removeBackground={removeBackground}
                     setRemoveBackground={setRemoveBackground}/>
+                )}
+
+                {activeSection.id === 'summary' && (
+                  <ProffesionalSummary
+                    data={resumeData.professional_summary}
+                    onChange={(professional_summary) =>
+                      setResumeData((prev) => ({ ...prev, professional_summary }))
+                    }
+                  />
                 )}
               </div>
             </div>
