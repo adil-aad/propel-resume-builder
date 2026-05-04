@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
-import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
+import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, Download, FileText, FolderIcon, GraduationCap, Lock, Save, Sparkles, Unlock, User } from 'lucide-react'
 import EducaitonForm from '../components/EducaitonForm'
 import ExperienceForm from '../components/ExperienceForm'
 import PersonalInfo from '../components/PersonalInfo'
@@ -51,6 +51,27 @@ const Resume = () => {
   ]
 
   const activeSection = sections[activeSectionIndex]
+
+  const ResumeVisibility = async () => {
+    setResumeData({...resumeData, public: !resumeData.public})
+  }
+
+  const handleShare = () => {
+    const frontendUrl = window.location.href.split('/app/')[0]
+    const resumeUrl = frontendUrl + '/view' + resumeId
+
+    if(navigator.share){
+      navigator.share({url: resumeUrl, text: "My Resume"})
+    }else{
+      alert("Share not Supporeted on this browser")
+    }
+  }
+
+
+  const downloadResume = () => {
+    window.print()
+    
+  }
 
   useEffect(()=>{
     loadExsistingResume()
@@ -146,8 +167,9 @@ const Resume = () => {
                   <div>
                     <p className='text-xs font-semibold uppercase tracking-[0.24em] text-slate-400'>Preview Panel</p>
                     <h2 className='text-lg font-semibold text-slate-900'>{resumeData.title || 'Untitled Resume'}</h2>
+                    {saveState && <p className='mt-1 text-xs font-medium text-emerald-600'>{saveState}</p>}
                   </div>
-                  <div className='flex items-center gap-3 text-sm text-slate-500'>
+                  <div className='flex flex-wrap items-center gap-3 text-sm text-slate-500'>
                     <span className='rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700'>
                       {resumeData.template}
                     </span>
@@ -155,6 +177,26 @@ const Resume = () => {
                       <span className='h-3 w-3 rounded-full border border-white shadow-sm' style={{ backgroundColor: resumeData.accent_color }} />
                       {resumeData.accent_color}
                     </span>
+                    <button
+                      type='button'
+                      onClick={() => setResumeData((prev) => ({ ...prev, public: !prev.public }))}
+                      className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition ${
+                        resumeData.public
+                          ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      }`}
+                    >
+                      {resumeData.public ? <Unlock className='size-3.5' /> : <Lock className='size-3.5' />}
+                      {resumeData.public ? 'Public' : 'Private'}
+                    </button>
+                    <button
+                      type='button'
+                      onClick={downloadResume}
+                      className='inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 transition hover:border-slate-300 hover:bg-slate-50'
+                    >
+                      <Download className='size-3.5' />
+                      Download
+                    </button>
                   </div>
                 </div>
               </div>
@@ -178,6 +220,42 @@ const Resume = () => {
           </div>
         </div>
       </div>
+
+      <style>{`
+        body.printing-resume .max-w-7xl,
+        body.printing-resume nav,
+        body.printing-resume button,
+        body.printing-resume input,
+        body.printing-resume textarea,
+        body.printing-resume label,
+        body.printing-resume .lg\\:col-span-5,
+        body.printing-resume .rounded-3xl:not(:has(#resume-preview)) {
+          visibility: hidden;
+        }
+        body.printing-resume #resume-preview,
+        body.printing-resume #resume-preview * {
+          visibility: visible;
+        }
+        body.printing-resume #resume-preview {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          border: none !important;
+          box-shadow: none !important;
+          border-radius: 0 !important;
+          overflow: visible !important;
+          background: white !important;
+        }
+        @media print {
+          body {
+            background: white !important;
+          }
+          #resume-preview {
+            border: none !important;
+            box-shadow: none !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }
