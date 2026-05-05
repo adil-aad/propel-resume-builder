@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
-import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, Download, FileText, FolderIcon, GraduationCap, Lock, Save, Sparkles, Unlock, User } from 'lucide-react'
+import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, Download, FileText, FolderIcon, GraduationCap, Lock, Share2, Sparkles, Unlock, User } from 'lucide-react'
 import EducaitonForm from '../components/EducaitonForm'
 import ExperienceForm from '../components/ExperienceForm'
 import PersonalInfo from '../components/PersonalInfo'
@@ -52,18 +52,23 @@ const Resume = () => {
 
   const activeSection = sections[activeSectionIndex]
 
-  const ResumeVisibility = async () => {
-    setResumeData({...resumeData, public: !resumeData.public})
+  const resumeVisibility = () => {
+    setResumeData((prev) => ({ ...prev, public: !prev.public }))
   }
 
   const handleShare = () => {
     const frontendUrl = window.location.href.split('/app/')[0]
-    const resumeUrl = frontendUrl + '/view' + resumeId
+    const resumeUrl = `${frontendUrl}/view/${resumeId}`
 
-    if(navigator.share){
-      navigator.share({url: resumeUrl, text: "My Resume"})
-    }else{
-      alert("Share not Supporeted on this browser")
+    if (navigator.share) {
+      navigator.share({
+        title: resumeData.title || 'My Resume',
+        text: 'Take a look at my resume.',
+        url: resumeUrl,
+      })
+    } else {
+      navigator.clipboard?.writeText(resumeUrl)
+      alert("Share not supported on this browser. Resume link copied instead.")
     }
   }
 
@@ -167,7 +172,6 @@ const Resume = () => {
                   <div>
                     <p className='text-xs font-semibold uppercase tracking-[0.24em] text-slate-400'>Preview Panel</p>
                     <h2 className='text-lg font-semibold text-slate-900'>{resumeData.title || 'Untitled Resume'}</h2>
-                    {saveState && <p className='mt-1 text-xs font-medium text-emerald-600'>{saveState}</p>}
                   </div>
                   <div className='flex flex-wrap items-center gap-3 text-sm text-slate-500'>
                     <span className='rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700'>
@@ -179,7 +183,7 @@ const Resume = () => {
                     </span>
                     <button
                       type='button'
-                      onClick={() => setResumeData((prev) => ({ ...prev, public: !prev.public }))}
+                      onClick={resumeVisibility}
                       className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition ${
                         resumeData.public
                           ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
@@ -188,6 +192,14 @@ const Resume = () => {
                     >
                       {resumeData.public ? <Unlock className='size-3.5' /> : <Lock className='size-3.5' />}
                       {resumeData.public ? 'Public' : 'Private'}
+                    </button>
+                    <button
+                      type='button'
+                      onClick={handleShare}
+                      className='inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 transition hover:border-slate-300 hover:bg-slate-50'
+                    >
+                      <Share2 className='size-3.5' />
+                      Share
                     </button>
                     <button
                       type='button'
