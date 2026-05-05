@@ -74,8 +74,73 @@ const Resume = () => {
 
 
   const downloadResume = () => {
-    window.print()
-    
+    const resumeNode = document.getElementById('resume-preview')
+    if (!resumeNode) return
+
+    const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
+      .map((node) => node.outerHTML)
+      .join('\n')
+
+    const iframe = document.createElement('iframe')
+    iframe.style.position = 'fixed'
+    iframe.style.right = '0'
+    iframe.style.bottom = '0'
+    iframe.style.width = '0'
+    iframe.style.height = '0'
+    iframe.style.border = '0'
+    document.body.appendChild(iframe)
+
+    const iframeDocument = iframe.contentWindow?.document
+    if (!iframeDocument) {
+      document.body.removeChild(iframe)
+      alert('Unable to prepare the resume for download.')
+      return
+    }
+
+    iframeDocument.open()
+    iframeDocument.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>${resumeData.title || 'Resume'}</title>
+          ${styles}
+          <style>
+            body {
+              margin: 0;
+              background: white;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+            }
+            #print-root {
+              width: 100%;
+              margin: 0;
+              padding: 0;
+              background: white;
+            }
+            #print-root > * {
+              border: none !important;
+              box-shadow: none !important;
+              border-radius: 0 !important;
+            }
+            @page {
+              margin: 12mm;
+            }
+          </style>
+        </head>
+        <body>
+          <div id="print-root">${resumeNode.outerHTML}</div>
+        </body>
+      </html>
+    `)
+    iframeDocument.close()
+
+    setTimeout(() => {
+      iframe.contentWindow?.focus()
+      iframe.contentWindow?.print()
+      setTimeout(() => {
+        document.body.removeChild(iframe)
+      }, 1000)
+    }, 250)
   }
 
   useEffect(()=>{
@@ -232,42 +297,6 @@ const Resume = () => {
           </div>
         </div>
       </div>
-
-      <style>{`
-        body.printing-resume .max-w-7xl,
-        body.printing-resume nav,
-        body.printing-resume button,
-        body.printing-resume input,
-        body.printing-resume textarea,
-        body.printing-resume label,
-        body.printing-resume .lg\\:col-span-5,
-        body.printing-resume .rounded-3xl:not(:has(#resume-preview)) {
-          visibility: hidden;
-        }
-        body.printing-resume #resume-preview,
-        body.printing-resume #resume-preview * {
-          visibility: visible;
-        }
-        body.printing-resume #resume-preview {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          border: none !important;
-          box-shadow: none !important;
-          border-radius: 0 !important;
-          overflow: visible !important;
-          background: white !important;
-        }
-        @media print {
-          body {
-            background: white !important;
-          }
-          #resume-preview {
-            border: none !important;
-            box-shadow: none !important;
-          }
-        }
-      `}</style>
     </div>
   )
 }
