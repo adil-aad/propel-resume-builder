@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
+import Loading from '../components/Loading'
 
 const Preview = () => {
 
@@ -15,10 +16,12 @@ const Preview = () => {
   useEffect(()=>{
     loadResume()
   },[])
-  return (
+  return resumeData ? (
     <div>
 
     </div>
+  ) : (
+    <Loading />
   )
 }
 
