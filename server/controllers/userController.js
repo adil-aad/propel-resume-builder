@@ -72,7 +72,7 @@ export const loginUser = async (req, res) => {
 
 // getting user by ID
 
-export const loginUser = async (req, res) => {
+export const getUserById = async (req, res) => {
     try {
         const userId = req.userId
 
