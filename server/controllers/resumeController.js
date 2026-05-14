@@ -37,3 +37,33 @@ export const deleteResume = async (req, res) => {
         return res.status(400).json({message: error.message})
     }
 }
+
+
+//get user by id
+
+export const getResumebyId = async (req, res) => {
+    try {
+        const userId = req.userId
+
+        const {resumeId} = req.params
+
+        const resume = await Resume.findOne({userId, _id: resumeId})
+
+        if(!resume){
+           return res.status(404).json({message: "Resume not Found"}) 
+        }
+
+        // delete resume
+
+        await Resume.findOneAndDelete({userId, _id: resumeId})
+
+        resume.__v = undefined
+        resume.createdAt = undefined
+        resume.updatedAt = undefined
+
+        return res.status(200).json({resume})
+
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+}
