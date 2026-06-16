@@ -1,4 +1,4 @@
-import ai from "../configs/ai"
+import ai from "../configs/ai.js"
 
 export const enhanceSummary = async (req, res) => {
     try {
@@ -18,7 +18,39 @@ export const enhanceSummary = async (req, res) => {
         });
 
         console.log(response.text);
+
+        const enhancedContent = response.text
+        return res.status(200).json({enhancedContent})
     } catch (error) {
-        
+        return res.status(400).json({message: error.message})
+    }
+}
+
+
+// enhance the job decription
+
+export const enhanceJobDescription = async (req, res) => {
+    try {
+        const {userContent} = req.body
+
+        if(!userContent){
+            return res.status(400).json({message: "Fill in the required fields"})
+        }
+
+        const response = await ai.models.generateContent({
+        model: process.env.GEMINI_MODEL,
+        contents: userContent,
+        config: {
+         systemInstruction:
+            "You are a professional resume writer. Improve the user's job description while keeping it truthful, concise, ATS-friendly, and professional. Return only the enhanced summary.",
+        },
+        });
+
+        console.log(response.text);
+
+        const enhancedContent = response.text
+        return res.status(200).json({enhancedContent})
+    } catch (error) {
+        return res.status(400).json({message: error.message})
     }
 }
