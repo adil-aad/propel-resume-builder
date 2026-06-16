@@ -1,6 +1,6 @@
 import express from 'express'
-import protect from '../middlewares/authMiddleware'
-import { enhanceJobDescription, enhanceSummary, uploadResume } from '../controllers/aiController'
+import protect from '../middlewares/authMiddleware.js'
+import { enhanceJobDescription, enhanceSummary, uploadResume } from '../controllers/aiController.js'
 
 const aiRouter = express.Router()
 
