@@ -1,8 +1,9 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import NavBar from '../components/NavBar'
-import useSelector from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Loader } from 'lucide-react'
+import Login from './Login'
 
 const Layout = () => {
 

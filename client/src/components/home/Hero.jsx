@@ -28,7 +28,7 @@ const Hero = () => {
                         </div>
 
                         <div className="hidden gap-3 md:flex">
-                            <Link to='/app?state=logins' className="rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-500 hover:bg-white">
+                            <Link to='/app?state=login' className="rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-500 hover:bg-white">
                                 Login
                             </Link>
                             <Link to='/app?state=register' className="rounded-full bg-slate-950 px-5 py-2 text-sm font-medium text-white transition hover:bg-slate-800">
