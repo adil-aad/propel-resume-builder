@@ -1,8 +1,11 @@
 import React from 'react'
 import { ArrowRight, Menu, Sparkles, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Hero = () => {
+
+    const {user, loading} = useSelector(state => state.auth)
     const [menuOpen, setMenuOpen] = React.useState(false)
 
     return (
@@ -28,12 +31,22 @@ const Hero = () => {
                         </div>
 
                         <div className="hidden gap-3 md:flex">
-                            <Link to='/app?state=login' className="rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-500 hover:bg-white">
-                                Login
-                            </Link>
-                            <Link to='/app?state=register' className="rounded-full bg-slate-950 px-5 py-2 text-sm font-medium text-white transition hover:bg-slate-800">
-                                Get Started
-                            </Link>
+                            {!loading && (
+                                user ? (
+                                    <Link to="/app" className="rounded-full bg-slate-950 px-5 py-2 text-sm font-medium text-white transition hover:bg-slate-800">
+                                        Dashboard
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <Link to="/app?state=login" className="rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-500 hover:bg-white">
+                                            Login
+                                        </Link>
+                                        <Link to="/app?state=register" className="rounded-full bg-slate-950 px-5 py-2 text-sm font-medium text-white transition hover:bg-slate-800">
+                                            Get Started
+                                        </Link>
+                                    </>
+                                )
+                            )}
                         </div>
 
                         <button onClick={() => setMenuOpen(true)} className="rounded-xl border border-slate-300 bg-white/80 p-2 md:hidden">
@@ -46,9 +59,17 @@ const Hero = () => {
                     <a href="#features" className="hover:text-orange-300">Features</a>
                     <a href="#workflow" className="hover:text-orange-300">Workflow</a>
                     <a href="#cta" className="hover:text-orange-300">Get Started</a>
-                    <Link to='/app?state=register' className="rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-950">
-                        Create Account
-                    </Link>
+                    {!loading && (
+                        user ? (
+                            <Link to="/app" className="rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-950">
+                                Dashboard
+                            </Link>
+                        ) : (
+                            <Link to="/app?state=register" className="rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-950">
+                                Create Account
+                            </Link>
+                        )
+                    )}
                     <button onClick={() => setMenuOpen(false)} className="absolute right-6 top-6 rounded-full border border-white/20 p-2">
                         <X className="size-5" />
                     </button>
