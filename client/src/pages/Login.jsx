@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Lock, Mail, User2Icon } from 'lucide-react';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
 
@@ -14,6 +15,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await api.post(`/api/users/${state}`, formData)
+      dispatch(login(data))
+      localStorage.setItem('token', data.token)
+    } catch (error) {
+      
+    }
   };
 
   const handleChange = (e) => {
