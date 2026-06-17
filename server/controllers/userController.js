@@ -15,7 +15,7 @@ export const registerUser = async (req, res) => {
     try {
         const {name, email, password} = req.body
 
-        if(!name || email || password){
+        if(!name || !email || !password){
             return res.status(400).json({message: "Missing required fields"})
         }
 
@@ -50,7 +50,7 @@ export const loginUser = async (req, res) => {
         const { email, password} = req.body
 
         const user = await User.findOne({email})
-        if(user){
+        if(!user){
             return res.status(400).json({message: "Invalid Email or Password"})
         }
 

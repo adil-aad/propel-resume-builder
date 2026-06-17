@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { Lock, Mail, User2Icon } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
+import api from '../configs/api.js';
+import { login } from '../app/features/authSlice.js';
 
 const Login = () => {
+  const dispatch = useDispatch()
 
   const query = new URLSearchParams(window.location.search)
   const urlState = query.get('state')
@@ -22,7 +25,7 @@ const Login = () => {
       localStorage.setItem('token', data.token)
       toast.success(data.message)
     } catch (error) {
-      toast(error?.response?.data?.message || error.message)
+      toast.error(error?.response?.data?.message || error.message)
     }
   };
 
