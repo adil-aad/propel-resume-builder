@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Lock, Mail, User2Icon } from 'lucide-react';
 import { useDispatch } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const Login = () => {
 
@@ -19,8 +20,9 @@ const Login = () => {
       const { data } = await api.post(`/api/users/${state}`, formData)
       dispatch(login(data))
       localStorage.setItem('token', data.token)
+      toast.success(data.message)
     } catch (error) {
-      
+      toast(error?.response?.data?.message || error.message)
     }
   };
 
