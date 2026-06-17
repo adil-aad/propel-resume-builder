@@ -6,8 +6,23 @@ import Dashboard from './pages/DashboardPage.jsx'
 import Resume from './pages/Resume'
 import Preview from './pages/Preview'
 import Login from './pages/Login'
+import { useDispatch } from 'react-redux'
 
 const App = () => {
+
+  const dispatch = useDispatch()
+
+  const getUserData = async () => {
+    const token = localStorage.getItem('token')
+
+    try {
+      if(token){
+        
+      }
+    } catch (error) {
+      
+    }
+  }
   return (
     <>
       <Routes>
