@@ -10,10 +10,15 @@ import {
   XIcon,
 } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { dummyResumeData } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import toast from 'react-hot-toast'
+import api from '../configs/api.js'
 
 const Dashboard = () => {
+
+  const {token} = useSelector(state => state.auth)
+
   const colors = ['#14b8a6', '#0ea5e9', '#f97316', '#f43f5e', '#8b5cf6']
 
   const [allResumes, setAllResumes] = useState([])
@@ -25,15 +30,17 @@ const Dashboard = () => {
 
   const navigate = useNavigate()
 
-  const loadAllResumes = async () => {
-    setAllResumes(dummyResumeData)
-  }
-
   const createResume = async (event) => {
-    event.preventDefault()
-    setshowCreateResume(false)
-    setTitle('')
-    navigate(`/app/builder/res123`)
+    try {
+      event.preventDefault()
+      const { data } = await api.post ('/api/resumes/create', {title}, {headers: {Authorization: token}})
+      setAllResumes(prev => [data.resume, ...prev])
+      setTitle('')
+      setshowCreateResume(false)
+      navigate(`/app/builder/${data.resume._id}`)
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message)
+    }
   }
 
   const uploadResume = async (event) => {
@@ -57,8 +64,22 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    loadAllResumes()
-  }, [])
+    if (!token) return
+
+    let isMounted = true
+
+    api.get('/api/users/resumes', {headers: {Authorization: token}})
+      .then(({ data }) => {
+        if (isMounted) setAllResumes(data)
+      })
+      .catch((error) => {
+        if (isMounted) toast.error(error?.response?.data?.message || error.message)
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [token])
 
   const stats = [
     {

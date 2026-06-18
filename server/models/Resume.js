@@ -6,13 +6,13 @@ const ResumeSchema = new mongoose.Schema({
     title: {type: String, default: "Untitled Resume"},
     public: {type: Boolean, default: false},
     template: {type: String, default: "classic"}, 
-    accentColor: {type: String, default: "#3B82F6"},
-    proffesionlaSummary: {type: String, default: ''},
+    accent_color: {type: String, default: "#3B82F6"},
+    professional_summary: {type: String, default: ''},
     skills: [{type: String}],
-    perosonalInfo: {
+    personal_info: {
         image: {type: String, default: ''},
         full_name: {type: String, default: ''},
-        proffesion: {type: String, default: ''},
+        profession: {type: String, default: ''},
         email: {type: String, default: ''},
         phone: {type: String, default: ''},
         location: {type: String, default: ''},

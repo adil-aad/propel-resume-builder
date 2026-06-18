@@ -54,10 +54,6 @@ export const getResumebyId = async (req, res) => {
            return res.status(404).json({message: "Resume not Found"}) 
         }
 
-        // delete resume
-
-        await Resume.findOneAndDelete({userId, _id: resumeId})
-
         resume.__v = undefined
         resume.createdAt = undefined
         resume.updatedAt = undefined
@@ -73,7 +69,7 @@ export const getResumebyId = async (req, res) => {
 
 export const getPublicResumeById = async (req, res) => {
     try {
-        const resumeId = req.params
+        const {resumeId} = req.params
         const resume = await Resume.findOne({public: true, _id: resumeId})
 
         if(!resume){
@@ -112,7 +108,7 @@ export const updateResume = async (req, res) => {
             resumeDataCopy.personal_info.image = response.url
         }
 
-        const resume = await resume.findByIdAndUpdate({userId, _id: resumeId}, resumeDataCopy, {new: true})
+        const resume = await Resume.findOneAndUpdate({userId, _id: resumeId}, resumeDataCopy, {new: true})
 
         return res.status(200).json({message: 'Saved successfully', resume})
 

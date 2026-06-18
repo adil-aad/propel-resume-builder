@@ -11,10 +11,14 @@ import ResumePreview from '../components/ResumePreview'
 import SkillsForm from '../components/SkillsForm'
 import TemplateSelector from '../components/TemplateSelector'
 import ColorPicker from '../components/ColorPicker'
+import api from '../configs/api.js'
+import { useSelector } from 'react-redux'
+import toast from 'react-hot-toast'
 
 const Resume = () => {
 
   const {resumeId} = useParams()
+  const { token } = useSelector(state => state.auth)
 
   const [resumeData, setResumeData] = useState({
     _id: '',
@@ -29,14 +33,6 @@ const Resume = () => {
     accent_color: "#3B82F6",
     public: false,
   }) 
-
-  const loadExsistingResume = async () => {
-    const resume = dummyResumeData.find(resume => resume._id === resumeId)
-    if (resume) {
-      setResumeData(resume)
-      document.title = resume.title
-    }
-  }
 
   const [activeSectionIndex, setActiveSectionIndex] = useState(0)
   const [removeBackground, setRemoveBackground] = useState(false)
@@ -144,8 +140,33 @@ const Resume = () => {
   }
 
   useEffect(()=>{
-    loadExsistingResume()
-  }, [])
+    if (!token || !resumeId) return
+
+    let isMounted = true
+
+    api.get(`/api/resumes/get/${resumeId}`, {headers: {Authorization: token}})
+      .then(({ data }) => {
+        if (!isMounted) return
+        setResumeData(data.resume)
+        document.title = data.resume.title || 'Untitled Resume'
+      })
+      .catch((error) => {
+        if (!isMounted) return
+
+        const resume = dummyResumeData.find(resume => resume._id === resumeId)
+        if (resume) {
+          setResumeData(resume)
+          document.title = resume.title
+          return
+        }
+
+        toast.error(error?.response?.data?.message || error.message)
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [token, resumeId])
   return (
     <div>
       <div className='max-w-7xl mx-auto px-4 py-6'> 
