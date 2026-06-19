@@ -18,7 +18,7 @@ import pdfToText from 'react-pdftotext'
 
 const Dashboard = () => {
 
-  const {user, token} = useSelector(state => state.auth)
+  const {token} = useSelector(state => state.auth)
 
   const colors = ['#14b8a6', '#0ea5e9', '#f97316', '#f43f5e', '#8b5cf6']
 
@@ -52,7 +52,8 @@ const Dashboard = () => {
 
     try {
       const resumeText = await pdfToText(resume)
-      const { data } = await api.post('api/ai/upload-resume', {title, resumeText}, {headers: {Authorization: token}})
+      const { data } = await api.post('/api/ai/upload-resume', {title, resumeText}, {headers: {Authorization: token}})
+      if (data.message) toast.success(data.message)
       setTitle('')
       setshowUploadResume(false)
       setResume(null)
@@ -405,9 +406,10 @@ const Dashboard = () => {
 
               <button
                 type="submit"
-                className="mt-5 w-full rounded-2xl bg-emerald-600 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700"
+                disabled={isLoading}
+                className="mt-5 w-full rounded-2xl bg-emerald-600 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                Create Resume
+                {isLoading ? 'Importing...' : 'Create Resume'}
               </button>
 
               <XIcon

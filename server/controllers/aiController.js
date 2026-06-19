@@ -1,6 +1,11 @@
 import ai from "../configs/ai.js"
 import Resume from '../models/Resume.js'
 
+const isQuotaError = (error) => {
+  const message = error?.message || ''
+  return error?.status === 429 || message.includes('RESOURCE_EXHAUSTED') || message.includes('Quota exceeded')
+}
+
 export const enhanceSummary = async (req, res) => {
     try {
         const {userContent} = req.body
@@ -81,12 +86,12 @@ export const uploadResume = async (req, res) => {
 
 
     {
-        "proffesionlaSummary": "",
+        "professional_summary": "",
         "skills": [],
-        "perosonalInfo": {
+        "personal_info": {
             "image": "",
             "full_name": "",
-            "proffesion": "",
+            "profession": "",
             "email": "",
             "phone": "",
             "location": "",
@@ -137,6 +142,17 @@ export const uploadResume = async (req, res) => {
 
     return res.json({ resumeId: newResume._id })
   } catch (error) {
+    if (isQuotaError(error)) {
+      const { title } = req.body
+      const userId = req.userId
+      const newResume = await Resume.create({userId, title})
+
+      return res.status(201).json({
+        resumeId: newResume._id,
+        message: 'AI parser quota is temporarily exhausted, so a blank draft was created. You can paste or edit the content manually.'
+      })
+    }
+
     return res.status(400).json({ message: error.message })
   }
 }
