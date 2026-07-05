@@ -48,8 +48,27 @@ const Resume = () => {
 
   const activeSection = sections[activeSectionIndex]
 
-  const resumeVisibility = () => {
-    setResumeData((prev) => ({ ...prev, public: !prev.public }))
+  const changeResumeVisibility = async () => {
+    const nextPublic = !resumeData.public
+    const previousResumeData = resumeData
+
+    setResumeData((prev) => ({ ...prev, public: nextPublic }))
+
+    try {
+      const { data } = await api.put('/api/resumes/update', {
+        resumeId,
+        resumeData: { public: nextPublic },
+      }, { headers: { Authorization: token } })
+
+      if (data.resume) {
+        setResumeData((prev) => ({ ...prev, public: data.resume.public }))
+      }
+
+      toast.success(nextPublic ? 'Resume is now public' : 'Resume is now private')
+    } catch (error) {
+      setResumeData(previousResumeData)
+      toast.error(error?.response?.data?.message || error.message)
+    }
   }
 
   const handleShare = () => {
@@ -269,7 +288,7 @@ const Resume = () => {
                     </span>
                     <button
                       type='button'
-                      onClick={resumeVisibility}
+                      onClick={changeResumeVisibility}
                       className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition ${
                         resumeData.public
                           ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
