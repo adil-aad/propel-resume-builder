@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { Plus, Sparkles, Trash2 } from 'lucide-react'
 
-const SkillsForm = ({ data, onChange, onSave, isSaving = false }) => {
+const SkillsForm = ({ data, onChange }) => {
     const [newSkill, setNewSkill] = useState('')
     const skills = Array.isArray(data) ? data : []
 
@@ -121,15 +121,6 @@ const SkillsForm = ({ data, onChange, onSave, isSaving = false }) => {
                     </div>
                 )}
             </div>
-
-            <button
-                type='button'
-                onClick={onSave}
-                disabled={isSaving}
-                className='mt-6 inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70'
-            >
-                {isSaving ? 'Saving...' : 'Save Changes'}
-            </button>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
-import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, Download, FileText, FolderIcon, GraduationCap, Lock, Share2, Sparkles, Unlock, User } from 'lucide-react'
+import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, Download, FileText, FolderIcon, GraduationCap, Lock, Save, Share2, Sparkles, Unlock, User } from 'lucide-react'
 import EducaitonForm from '../components/EducaitonForm'
 import ExperienceForm from '../components/ExperienceForm'
 import PersonalInfo from '../components/PersonalInfo'
@@ -298,10 +298,20 @@ const Resume = () => {
                   <SkillsForm
                     data={resumeData.skills}
                     onChange={(skills) => setResumeData((prev) => ({ ...prev, skills }))}
-                    onSave={saveResume}
-                    isSaving={isSaving}
                   />
                 )}
+
+                <div className='flex justify-end border-t border-slate-200 pt-5'>
+                  <button
+                    type='button'
+                    onClick={saveResume}
+                    disabled={isSaving}
+                    className='inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70'
+                  >
+                    <Save className='size-4' />
+                    {isSaving ? 'Saving...' : 'Save Changes'}
+                  </button>
+                </div>
               </div>
             </div>
 
