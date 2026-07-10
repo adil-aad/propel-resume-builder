@@ -36,6 +36,7 @@ const Resume = () => {
 
   const [activeSectionIndex, setActiveSectionIndex] = useState(0)
   const [removeBackground, setRemoveBackground] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
 
   const sections = [
     {id: "personal", name: "Personal Info", icon: User},
@@ -68,6 +69,41 @@ const Resume = () => {
     } catch (error) {
       setResumeData(previousResumeData)
       toast.error(error?.response?.data?.message || error.message)
+    }
+  }
+
+  const saveResume = async () => {
+    setIsSaving(true)
+
+    try {
+      let updatedResumeData = structuredClone(resumeData)
+
+      delete updatedResumeData._id
+      delete updatedResumeData.__v
+      delete updatedResumeData.createdAt
+      delete updatedResumeData.updatedAt
+
+      // remove image from the resumedata
+      if(typeof resumeData.personal_info.image === 'object'){
+        delete updatedResumeData.personal_info.image
+      }
+
+      const formData = new FormData()
+      formData.append('resumeId', resumeId)
+      formData.append('resumeData', JSON.stringify(updatedResumeData))
+      removeBackground && formData.append("removeBackground", "yes")
+      typeof resumeData.personal_info.image === 'object' && formData.append("image", 
+        resumeData.personal_info.image
+      )
+
+      const { data } = await api.put('/api/resumes/update', formData, {headers: {Authorization: token}})
+
+      setResumeData(data.resume)
+      toast.success(data.message)
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message)
+    } finally {
+      setIsSaving(false)
     }
   }
 
@@ -262,6 +298,8 @@ const Resume = () => {
                   <SkillsForm
                     data={resumeData.skills}
                     onChange={(skills) => setResumeData((prev) => ({ ...prev, skills }))}
+                    onSave={saveResume}
+                    isSaving={isSaving}
                   />
                 )}
               </div>

@@ -90,13 +90,19 @@ export const updateResume = async (req, res) => {
 
         const image = req.file
 
-        let resumeDataCopy = JSON.parse(JSON.stringify(resumeData))
+        if (!resumeId || !resumeData) {
+            return res.status(400).json({message: 'Resume id and data are required'})
+        }
+
+        let resumeDataCopy = typeof resumeData === 'string'
+            ? JSON.parse(resumeData)
+            : JSON.parse(JSON.stringify(resumeData))
 
 
         if(image){
 
             const imageBufferData = fs.createReadStream(image.path)
-            const response = await client.files.upload({
+            const response = await imagekit.files.upload({
             file: imageBufferData,
             fileName: 'resume.png',
             folder: 'user-resumes',
@@ -109,6 +115,10 @@ export const updateResume = async (req, res) => {
         }
 
         const resume = await Resume.findOneAndUpdate({userId, _id: resumeId}, resumeDataCopy, {new: true})
+
+        if(!resume){
+           return res.status(404).json({message: "Resume not Found"}) 
+        }
 
         return res.status(200).json({message: 'Saved successfully', resume})
 
