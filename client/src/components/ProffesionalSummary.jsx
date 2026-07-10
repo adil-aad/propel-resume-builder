@@ -1,9 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FileText, Sparkles } from 'lucide-react'
+import { useSelector } from 'react-redux'
 
 const ProffesionalSummary = ({ data, onChange }) => {
   const summary = data || ''
   const characterCount = summary.trim().length
+
+  const {token} = useSelector(state => state.auth)
+  const [isGenerating, setIsGenerating] = useState(false)
+
+  const generateSummary = async () => {
+    try {
+      setIsGenerating(true)
+      const prompt = `enhance Proffesional summary`
+    } catch (error) {
+      
+    }
+  }
 
   return (
     <div>
