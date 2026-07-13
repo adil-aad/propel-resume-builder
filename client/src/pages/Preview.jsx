@@ -4,22 +4,31 @@ import { dummyResumeData } from '../assets/assets'
 import Loading from '../components/Loading'
 import ResumePreview from '../components/ResumePreview'
 import { ArrowLeftIcon, Download, Globe2, Lock } from 'lucide-react'
+import api from '../configs/api'
 
 const Preview = () => {
 
   const {resumeId} = useParams()
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const [resumeData, setResumeData] = useState(null)
   const [isMissing, setIsMissing] = useState(false)
 
   const loadResume = async () => {
-    const resume = dummyResumeData.find((item) => item._id === resumeId)
-    if (!resume) {
-      setIsMissing(true)
-      return
+    setIsLoading(true)
+
+    try {
+      const { data } = await api.get('/api/resumes/public/' + resumeId)
+      setResumeData(data.resume)
+    } catch (error) {
+      if (error?.response?.status === 404) {
+        setIsMissing(true)
+      }
+      console.log(error.message)
+    } finally {
+      setIsLoading(false)
     }
-    setResumeData(resume)
-    document.title = `${resume.title} | Resume Preview`
   }
 
   const downloadResume = () => {
@@ -85,9 +94,10 @@ const Preview = () => {
     }, 250)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     loadResume()
-  },[])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (isMissing) {
     return (
