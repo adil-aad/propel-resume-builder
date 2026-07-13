@@ -37,25 +37,25 @@ export const enhanceSummary = async (req, res) => {
 
 export const enhanceJobDescription = async (req, res) => {
     try {
-        const {userContent} = req.body
+      const {userContent} = req.body
 
-        if(!userContent){
-            return res.status(400).json({message: 'Fill in the Required Fileds'})
-        }
+      if(!userContent){
+        return res.status(400).json({message: 'Fill in the Required Fileds'})
+      }
 
-        const response = await ai.models.generateContent({
-        model: process.env.GEMINI_MODEL,
-        contents: userContent,
-        config: {
-         systemInstruction:
-            "You are a professional resume writer. Improve the user's job description while keeping it truthful, concise, ATS-friendly, and professional. Return only the enhanced job description",
-        },
-        });
+      const response = await ai.models.generateContent({
+      model: process.env.GEMINI_MODEL,
+      contents: userContent,
+      config: {
+        systemInstruction:
+          "You are a professional resume writer. Improve the user's job description while keeping it truthful, concise, ATS-friendly, and professional. Return only the enhanced job description",
+      },
+      });
 
-        console.log(response.text);
+      console.log(response.text);
 
-        const enhancedContent = response.text
-        return res.status(200).json({enhancedContent})
+      const enhancedContent = response.text
+      return res.status(200).json({enhancedContent})
     } catch (error) {
         return res.status(400).json({message: error.message})
     }

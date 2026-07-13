@@ -1,8 +1,14 @@
-import React from 'react'
-import { BriefcaseBusiness, Plus, Trash2 } from 'lucide-react'
+import React, { useState } from 'react'
+import { BriefcaseBusiness, Plus, Trash2, Sparkles } from 'lucide-react'
+import { useSelector } from 'react-redux'
+import toast from 'react-hot-toast'
+import api from '../configs/api.js'
 
 const ExperienceForm = ({ data, onChange }) => {
   const experiences = Array.isArray(data) ? data : []
+
+  const { token } = useSelector(state => state.auth)
+  const [ generatingIndex, setGeneratingIndex] = useState(-1)
 
   const updateExperience = (index, field, value) => {
     const next = experiences.map((experience, experienceIndex) =>
@@ -34,6 +40,23 @@ const ExperienceForm = ({ data, onChange }) => {
 
   const removeExperience = (index) => {
     onChange(experiences.filter((_, experienceIndex) => experienceIndex !== index))
+  }
+
+  const generateDescription = async (index) => {
+    setGeneratingIndex(index)
+    const experience = data[index]
+
+    const prompt = `enhance this job Description ${experience.description} for the position ${experience.position}
+    at ${experience.company}`
+
+    try {
+      const { data } = await api.post('/api/ai/enhance-job', {userContent: prompt},{headers: {Authorization: token}})
+      updateExperience(index, "description", data.enhancedContent)
+    } catch (error) {
+      toast.error(error.message)
+    } finally{
+      setGeneratingIndex(-1)
+    }
   }
 
   return (
@@ -148,11 +171,13 @@ const ExperienceForm = ({ data, onChange }) => {
                 <button
                   type='button'
                   className='inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50'
-                >
+                  onClick={()=>generateDescription(index)}
+                  disabled={generatingIndex === index || !experience.position || !experience.company}>
+                  <Sparkles className='size-4 text-orange-500' />
+                  {generatingIndex === index ? 'Enhancing...' : 'AI Enhance'}
                   <BriefcaseBusiness className='size-4 text-orange-500' />
-                  Enhance with AI
                 </button>
-              </div>
+              </div> 
               <textarea
                 rows={5}
                 value={experience.description || ''}
