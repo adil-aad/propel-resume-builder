@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { FileText, Sparkles } from 'lucide-react'
 import { useSelector } from 'react-redux'
+import toast from 'react-hot-toast'
+import api from '../configs/api.js'
 
 const ProffesionalSummary = ({ data, onChange }) => {
   const summary = data || ''
@@ -10,11 +12,24 @@ const ProffesionalSummary = ({ data, onChange }) => {
   const [isGenerating, setIsGenerating] = useState(false)
 
   const generateSummary = async () => {
+    if (!summary.trim()) {
+      toast.error('Write a rough summary first so AI has something to improve.')
+      return
+    }
+
     try {
       setIsGenerating(true)
-      const prompt = `enhance Proffesional summary`
+      const prompt = `Enhance this professional resume summary while keeping it truthful and concise:\n\n${summary}`
+      const { data } = await api.post('/api/ai/enhance-sum', {userContent: prompt},
+        {headers: {Authorization: token}})
+
+      onChange(data.enhancedContent)
+      toast.success('Summary enhanced')
     } catch (error) {
-      
+      toast.error(error?.response?.data?.message || error.message)
+    }
+    finally{
+      setIsGenerating(false)
     }
   }
 
@@ -63,10 +78,12 @@ const ProffesionalSummary = ({ data, onChange }) => {
 
           <button
             type='button'
-            className='inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50'
+            onClick={generateSummary}
+            disabled={isGenerating}
+            className='inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-70'
           >
             <Sparkles className='size-4 text-orange-500' />
-            AI Enhance
+            {isGenerating ? 'Enhancing...' : 'AI Enhance'}
           </button>
         </div>
 
