@@ -235,82 +235,137 @@ const Resume = () => {
           {/* Left Panel*/}
           <div className='relative lg:col-span-5 rounded-lg overflow-hidden'>
             <div className='bg-white rounded-lg shadow-sm border border-gray-200 p-6 pt-1'>
-              {/* progress bar*/}
-              <hr className='absolute top-0 left-0 right-0 border-2 border-gray-200'/>
-              <hr className='absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600 border-none
-              transition-all duration-2000' style={{width: `${activeSectionIndex * 100 / (sections.length - 1)}%`}}/>
-
-              <div className='flex justify-between items-center mb-6 border-b border-gray-300 py-1'>
-                <div></div>
-                <div className='flex items-center'></div>
-                {activeSectionIndex !== 0 && (
-                  <button onClick={()=> setActiveSectionIndex((prevIndex)=> Math.max(prevIndex - 1, 0))} className='flex items-center gap-1 p-3 rounded-lg text-sm font-medium
-                  text-gray-600 hover:bg-gray-50 transition-all' disabled={activeSectionIndex === 0}>
-                    <ChevronLeft className='size-4'/> Previous</button>
-                )}
-
-                <button onClick={()=> setActiveSectionIndex((prevIndex)=> Math.min(prevIndex + 1, sections.length-1))} className={`flex items-center gap-1 p-3 rounded-lg
-                  text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all ${activeSectionIndex === sections.length -1 &&
-                    'opacity-50'
-                  }`} disabled={activeSectionIndex === sections.length-1}>
-                    <ChevronRight className='size-4'/> Next</button>
+              {/* progress bar */}
+              <div className='absolute top-0 left-0 right-0 px-6 pt-4 pb-2 bg-white/80 backdrop-blur-sm border-b border-slate-100'>
+                <div className='flex items-center justify-between'>
+                  {sections.map((section, index) => {
+                    const Icon = section.icon
+                    const isActive = index === activeSectionIndex
+                    const isCompleted = index < activeSectionIndex
+                    return (
+                      <button
+                        key={section.id}
+                        onClick={() => setActiveSectionIndex(index)}
+                        className={`flex flex-col items-center gap-1 transition-all duration-300 ${
+                          isActive ? 'scale-110' : isCompleted ? 'opacity-80' : 'opacity-40'
+                        }`}
+                      >
+                        <div
+                          className={`flex items-center justify-center size-8 rounded-xl transition-all duration-300 ${
+                            isCompleted
+                              ? 'bg-slate-950 text-white shadow-md'
+                              : isActive
+                              ? 'bg-slate-950 text-white shadow-md ring-4 ring-slate-200'
+                              : 'bg-slate-100 text-slate-400'
+                          }`}
+                        >
+                          {isCompleted ? (
+                            <svg className='size-4' fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2.5}>
+                              <path strokeLinecap='round' strokeLinejoin='round' d='M4.5 12.75l6 6 9-13.5' />
+                            </svg>
+                          ) : (
+                            <Icon className='size-4' />
+                          )}
+                        </div>
+                        <span className={`text-[10px] font-semibold uppercase tracking-[0.12em] whitespace-nowrap transition-colors duration-300 ${
+                          isActive || isCompleted ? 'text-slate-800' : 'text-slate-400'
+                        }`}>
+                          {section.name}
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+                {/* connecting line */}
+                <div className='relative mt-2 h-0.5 bg-slate-200 rounded-full overflow-hidden'>
+                  <div
+                    className='absolute inset-y-0 left-0 bg-slate-950 rounded-full transition-all duration-500 ease-out'
+                    style={{ width: `${(activeSectionIndex / (sections.length - 1)) * 100}%` }}
+                  />
+                </div>
               </div>
+
+              <div className='pt-20'>
                 {/* Form Content*/}
-              <div className='space-y-6'>
-                {activeSection.id === 'personal' && (
-                  <PersonalInfo data={resumeData.personal_info}
-                   onChange={(data)=>setResumeData(prev => ({...prev, personal_info: data}))}
-                    removeBackground={removeBackground}
-                    setRemoveBackground={setRemoveBackground}/>
-                )}
+                <div className='space-y-6'>
+                  {activeSection.id === 'personal' && (
+                    <PersonalInfo data={resumeData.personal_info}
+                     onChange={(data)=>setResumeData(prev => ({...prev, personal_info: data}))}
+                      removeBackground={removeBackground}
+                      setRemoveBackground={setRemoveBackground}/>
+                  )}
 
-                {activeSection.id === 'summary' && (
-                  <ProffesionalSummary
-                    data={resumeData.professional_summary}
-                    onChange={(professional_summary) =>
-                      setResumeData((prev) => ({ ...prev, professional_summary }))
-                    }
-                  />
-                )}
+                  {activeSection.id === 'summary' && (
+                    <ProffesionalSummary
+                      data={resumeData.professional_summary}
+                      onChange={(professional_summary) =>
+                        setResumeData((prev) => ({ ...prev, professional_summary }))
+                      }
+                    />
+                  )}
 
-                {activeSection.id === 'experience' && (
-                  <ExperienceForm
-                    data={resumeData.experience}
-                    onChange={(experience) => setResumeData((prev) => ({ ...prev, experience }))}
-                  />
-                )}
+                  {activeSection.id === 'experience' && (
+                    <ExperienceForm
+                      data={resumeData.experience}
+                      onChange={(experience) => setResumeData((prev) => ({ ...prev, experience }))}
+                    />
+                  )}
 
-                {activeSection.id === 'education' && (
-                  <EducaitonForm
-                    data={resumeData.education}
-                    onChange={(education) => setResumeData((prev) => ({ ...prev, education }))}
-                  />
-                )}
+                  {activeSection.id === 'education' && (
+                    <EducaitonForm
+                      data={resumeData.education}
+                      onChange={(education) => setResumeData((prev) => ({ ...prev, education }))}
+                    />
+                  )}
 
-                {activeSection.id === 'projects' && (
-                  <ProjectForm
-                    data={resumeData.project}
-                    onChange={(project) => setResumeData((prev) => ({ ...prev, project }))}
-                  />
-                )}
+                  {activeSection.id === 'projects' && (
+                    <ProjectForm
+                      data={resumeData.project}
+                      onChange={(project) => setResumeData((prev) => ({ ...prev, project }))}
+                    />
+                  )}
 
-                {activeSection.id === 'skills' && (
-                  <SkillsForm
-                    data={resumeData.skills}
-                    onChange={(skills) => setResumeData((prev) => ({ ...prev, skills }))}
-                  />
-                )}
+                  {activeSection.id === 'skills' && (
+                    <SkillsForm
+                      data={resumeData.skills}
+                      onChange={(skills) => setResumeData((prev) => ({ ...prev, skills }))}
+                    />
+                  )}
 
-                <div className='flex justify-end border-t border-slate-200 pt-5'>
-                  <button
-                    type='button'
-                    onClick={saveResume}
-                    disabled={isSaving}
-                    className='inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70'
-                  >
-                    <Save className='size-4' />
-                    {isSaving ? 'Saving...' : 'Save Changes'}
-                  </button>
+                  <div className='flex items-center justify-between border-t border-slate-200 pt-5'>
+                    <button
+                      type='button'
+                      onClick={() => setActiveSectionIndex((prev) => Math.max(prev - 1, 0))}
+                      disabled={activeSectionIndex === 0}
+                      className='inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40'
+                    >
+                      <ChevronLeft className='size-4' />
+                      Previous
+                    </button>
+
+                    <div className='flex items-center gap-3'>
+                      <button
+                        type='button'
+                        onClick={saveResume}
+                        disabled={isSaving}
+                        className='inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70'
+                      >
+                        <Save className='size-4' />
+                        {isSaving ? 'Saving...' : 'Save Changes'}
+                      </button>
+
+                      {activeSectionIndex < sections.length - 1 && (
+                        <button
+                          type='button'
+                          onClick={() => setActiveSectionIndex((prev) => Math.min(prev + 1, sections.length - 1))}
+                          className='inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800'
+                        >
+                          Next
+                          <ChevronRight className='size-4' />
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
