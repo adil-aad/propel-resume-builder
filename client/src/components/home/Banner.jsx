@@ -7,7 +7,7 @@ const Banner = () => {
         <span className="mr-2 rounded-full bg-slate-950 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-white">
           New
         </span>
-        Resume imports, live previews, and richer builder layouts are now part of the workflow.
+        Import, preview, and build — all in one workflow.
       </p>
     </div>
   )

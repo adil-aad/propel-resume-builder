@@ -15,10 +15,10 @@ const Footer = () => {
                     <div className="flex flex-col gap-5">
                         <a href="/" className="flex items-center gap-3">
                             <div className="h-8 w-8 rotate-12 rounded-lg bg-slate-950"></div>
-                            <span className="text-xl font-bold text-slate-950">ResumeForge</span>
+                            <span className="text-xl font-bold text-slate-950">Propel Resume</span>
                         </a>
                         <p className="max-w-sm text-sm leading-6 text-slate-600">
-                            A cleaner way to write, preview, and manage professional resumes without losing track of your drafts.
+                            Write, preview, and manage resumes — all in one place.
                         </p>
                     </div>
 
@@ -50,8 +50,8 @@ const Footer = () => {
                 </div>
 
                 <div className="mx-auto mt-10 flex max-w-7xl flex-col gap-3 border-t border-slate-900/10 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-                    <p>Built for job seekers who want clarity, speed, and a stronger first impression.</p>
-                    <p>Copyright 2026 ResumeForge</p>
+                    <p>Built for job seekers who want clarity and speed.</p>
+                    <p>Copyright 2026 Propel Resume</p>
                 </div>
             </footer>
         </>

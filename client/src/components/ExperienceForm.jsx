@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { BriefcaseBusiness, Plus, Trash2, Sparkles } from 'lucide-react'
+import { BriefcaseBusiness, Plus, Trash2, Sparkles, CalendarDays } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import api from '../configs/api.js'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const ExperienceForm = ({ data, onChange }) => {
   const experiences = Array.isArray(data) ? data : []
@@ -130,23 +132,43 @@ const ExperienceForm = ({ data, onChange }) => {
 
               <div className='space-y-2'>
                 <label className='text-sm font-medium text-gray-600'>Start Date</label>
-                <input
-                  type='month'
-                  value={experience.start_date || ''}
-                  onChange={(e) => updateExperience(index, 'start_date', e.target.value)}
-                  className='w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-200'
-                />
+                <div className='relative'>
+                  <DatePicker
+                    selected={experience.start_date ? new Date(experience.start_date + '-01') : null}
+                    onChange={(date) => updateExperience(index, 'start_date', date ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}` : '')}
+                    dateFormat="MM/yyyy"
+                    showMonthYearPicker
+                    placeholderText="Select start date"
+                    className='w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-200'
+                  />
+                  <div
+                    className='absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer'
+                    onClick={(e) => e.currentTarget.previousSibling?.querySelector('input')?.click()}
+                  >
+                    <CalendarDays className='size-4 text-slate-400' />
+                  </div>
+                </div>
               </div>
 
               <div className='space-y-2'>
                 <label className='text-sm font-medium text-gray-600'>End Date</label>
-                <input
-                  type='month'
-                  value={experience.is_current ? '' : experience.end_date || ''}
-                  onChange={(e) => updateExperience(index, 'end_date', e.target.value)}
-                  disabled={experience.is_current}
-                  className='w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-200 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400'
-                />
+                <div className='relative'>
+                  <DatePicker
+                    selected={experience.end_date && !experience.is_current ? new Date(experience.end_date + '-01') : null}
+                    onChange={(date) => updateExperience(index, 'end_date', date ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}` : '')}
+                    dateFormat="MM/yyyy"
+                    showMonthYearPicker
+                    placeholderText="Select end date"
+                    disabled={experience.is_current}
+                    className='w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-200 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400'
+                  />
+                  <div
+                    className='absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer'
+                    onClick={(e) => !experience.is_current && e.currentTarget.previousSibling?.querySelector('input')?.click()}
+                  >
+                    <CalendarDays className='size-4 text-slate-400' />
+                  </div>
+                </div>
               </div>
             </div>
 

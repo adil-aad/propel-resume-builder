@@ -48,7 +48,7 @@ export const enhanceJobDescription = async (req, res) => {
       contents: userContent,
       config: {
         systemInstruction:
-          "You are a professional resume writer. Improve the user's job description while keeping it truthful, concise, ATS-friendly, and professional. Return only the enhanced job description",
+          "You are a professional resume writer. Rewrite the user's job description into one tight, impactful paragraph. Use strong action verbs, professional tone, and keep it concise (2-4 sentences). Do not use bullet points, markdown, or extra text. Return only the paragraph.",
       },
       });
 

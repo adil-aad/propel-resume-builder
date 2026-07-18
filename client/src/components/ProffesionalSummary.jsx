@@ -47,27 +47,6 @@ const ProffesionalSummary = ({ data, onChange }) => {
         </div>
       </div>
 
-      <div className='mt-6 rounded-3xl border border-slate-200 bg-slate-50/80 p-4'>
-        <div className='mb-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium uppercase tracking-[0.22em] text-slate-500'>
-          <Sparkles className='size-3.5 text-orange-500' />
-          Summary Tips
-        </div>
-
-        <div className='grid gap-3 text-sm text-slate-600 sm:grid-cols-3'>
-          <div className='rounded-2xl bg-white p-4'>
-            Keep it concise
-            <p className='mt-1 text-xs leading-5 text-slate-500'>Aim for 2 to 4 strong sentences instead of a long paragraph.</p>
-          </div>
-          <div className='rounded-2xl bg-white p-4'>
-            Mention your focus
-            <p className='mt-1 text-xs leading-5 text-slate-500'>Include your profession, specialization, or years of experience.</p>
-          </div>
-          <div className='rounded-2xl bg-white p-4'>
-            Show impact
-            <p className='mt-1 text-xs leading-5 text-slate-500'>Add the kind of results, strengths, or value you bring to a team.</p>
-          </div>
-        </div>
-      </div>
 
       <div className='mt-6 space-y-3'>
         <div className='flex flex-wrap items-center justify-between gap-3'>

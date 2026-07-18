@@ -172,9 +172,6 @@ const Dashboard = () => {
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-4 text-sm leading-6 text-slate-300 backdrop-blur-sm">
-                Your active resume actions live just below, so this header stays focused on context and momentum instead of repeating controls.
-              </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">

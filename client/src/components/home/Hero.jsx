@@ -21,7 +21,7 @@ const Hero = () => {
                     <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 md:px-12 lg:px-20">
                         <a href="/" className="flex items-center gap-3 text-xl font-bold tracking-tight">
                             <div className="h-8 w-8 rounded-lg bg-slate-950 rotate-12"></div>
-                            <span className="text-slate-950">ResumeForge</span>
+                            <span className="text-slate-950">Propel Resume</span>
                         </a>
 
                         <div className="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
@@ -79,16 +79,16 @@ const Hero = () => {
                     <div className="mx-auto flex max-w-4xl flex-col items-start justify-center">
                         <div className="animate-fade-in-up inline-flex w-fit items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-sm font-medium text-slate-700 backdrop-blur-sm">
                             <Sparkles className="size-4 text-orange-500" />
-                            Modern resume building for focused job seekers
+                            Build better resumes, faster
                         </div>
 
                         <h1 className="animate-fade-in-up animation-delay-100 mt-6 max-w-4xl text-5xl font-semibold tracking-tight text-slate-950 md:text-7xl">
-                            Build resumes that feel
-                            <span className="block text-slate-500">as polished as the work behind them.</span>
+                            Resumes that feel
+                            <span className="block text-slate-500">as polished as your work.</span>
                         </h1>
 
                         <p className="animate-fade-in-up animation-delay-200 mt-6 max-w-xl text-lg leading-8 text-slate-600">
-                            Create a clean, ATS-friendly resume, import an existing draft, and keep every version organized inside one calm, high-clarity workspace.
+                            Create, import, and organize ATS-friendly resumes in a clean, distraction-free workspace.
                         </p>
 
                         <div className="animate-fade-in-up animation-delay-300 mt-10 flex flex-col gap-4 sm:flex-row">

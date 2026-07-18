@@ -1,5 +1,7 @@
 import React from 'react'
-import { GraduationCap, Plus, Trash2 } from 'lucide-react'
+import { GraduationCap, Plus, Trash2, CalendarDays } from 'lucide-react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const EducaitonForm = ({ data, onChange }) => {
   const educationItems = Array.isArray(data) ? data : []
@@ -17,7 +19,6 @@ const EducaitonForm = ({ data, onChange }) => {
       {
         institution: '',
         degree: '',
-        field: '',
         graduation_date: '',
         gpa: '',
       },
@@ -98,24 +99,23 @@ const EducaitonForm = ({ data, onChange }) => {
               </div>
 
               <div className='space-y-2'>
-                <label className='text-sm font-medium text-gray-600'>Field of Study</label>
-                <input
-                  type='text'
-                  value={education.field || ''}
-                  onChange={(e) => updateEducation(index, 'field', e.target.value)}
-                  placeholder='Information Technology'
-                  className='w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-200'
-                />
-              </div>
-
-              <div className='space-y-2'>
                 <label className='text-sm font-medium text-gray-600'>Graduation Date</label>
-                <input
-                  type='month'
-                  value={education.graduation_date || ''}
-                  onChange={(e) => updateEducation(index, 'graduation_date', e.target.value)}
-                  className='w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-200'
-                />
+                <div className='relative'>
+                  <DatePicker
+                    selected={education.graduation_date ? new Date(education.graduation_date + '-01') : null}
+                    onChange={(date) => updateEducation(index, 'graduation_date', date ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}` : '')}
+                    dateFormat="MM/yyyy"
+                    showMonthYearPicker
+                    placeholderText="Select graduation date"
+                    className='w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-200'
+                  />
+                  <div
+                    className='absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer'
+                    onClick={(e) => e.currentTarget.previousSibling?.querySelector('input')?.click()}
+                  >
+                    <CalendarDays className='size-4 text-slate-400' />
+                  </div>
+                </div>
               </div>
 
               <div className='space-y-2'>

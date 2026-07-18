@@ -11,10 +11,10 @@ const GetStarted = () => {
                             Get Started
                         </p>
                         <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
-                            Create a sharper resume in minutes and keep every version in one place.
+                            A sharper resume in minutes.
                         </h2>
                         <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">
-                            Whether you are rebuilding from scratch or modernizing an older file, ResumeForge gives you a cleaner system to move faster.
+                            Propel Resume gives you a cleaner system to build faster — whether starting fresh or refining an existing file.
                         </p>
                     </div>
 

@@ -24,7 +24,7 @@ const Preview = () => {
     } catch (error) {
       if (error?.response?.status === 404) {
         setIsMissing(true)
-      }
+       }
       console.log(error.message)
     } finally {
       setIsLoading(false)

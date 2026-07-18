@@ -6,7 +6,7 @@ const Title = ({ title, description, align = 'center' }) => {
     return (
         <div className={`${isLeft ? 'text-left' : 'text-center'} mb-12`}>
             <p className="text-xs font-medium uppercase tracking-[0.28em] text-slate-400">
-                ResumeForge
+                Propel Resume
             </p>
             <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-900 md:text-5xl lg:text-6xl">
                 {title}
