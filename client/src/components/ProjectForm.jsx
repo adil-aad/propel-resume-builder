@@ -1,5 +1,6 @@
 import React from 'react'
 import { FolderKanban, Plus, Trash2 } from 'lucide-react'
+import DraggableList from './DraggableList'
 
 const ProjectForm = ({ data, onChange }) => {
   const projects = Array.isArray(data) ? data : []
@@ -26,6 +27,10 @@ const ProjectForm = ({ data, onChange }) => {
     onChange(projects.filter((_, projectIndex) => projectIndex !== index))
   }
 
+  const reorderProjects = (reordered) => {
+    onChange(reordered)
+  }
+
   return (
     <div>
       <div className='flex items-start justify-between gap-4'>
@@ -50,10 +55,12 @@ const ProjectForm = ({ data, onChange }) => {
           </div>
         )}
 
-        {projects.map((project, index) => (
-          <div key={index} className='rounded-3xl border border-slate-200 bg-slate-50/70 p-5'>
+        <DraggableList items={projects} onReorder={reorderProjects}>
+          {(project, index, { DragHandle }) => (
+          <div className='rounded-3xl border border-slate-200 bg-slate-50/70 p-5'>
             <div className='mb-5 flex items-center justify-between gap-3'>
-              <div>
+              <div className='flex items-center gap-2'>
+                {DragHandle}
                 <p className='text-xs font-semibold uppercase tracking-[0.22em] text-slate-400'>
                   Project {index + 1}
                 </p>
@@ -107,7 +114,8 @@ const ProjectForm = ({ data, onChange }) => {
               />
             </div>
           </div>
-        ))}
+          )}
+        </DraggableList>
       </div>
 
       <button

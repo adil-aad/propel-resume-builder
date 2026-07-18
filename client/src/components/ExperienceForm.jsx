@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 import api from '../configs/api.js'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import DraggableList from './DraggableList'
 
 const ExperienceForm = ({ data, onChange }) => {
   const experiences = Array.isArray(data) ? data : []
@@ -42,6 +43,10 @@ const ExperienceForm = ({ data, onChange }) => {
 
   const removeExperience = (index) => {
     onChange(experiences.filter((_, experienceIndex) => experienceIndex !== index))
+  }
+
+  const reorderExperiences = (reordered) => {
+    onChange(reordered)
   }
 
   const generateDescription = async (index) => {
@@ -85,10 +90,12 @@ const ExperienceForm = ({ data, onChange }) => {
           </div>
         )}
 
-        {experiences.map((experience, index) => (
-          <div key={index} className='rounded-3xl border border-slate-200 bg-slate-50/70 p-5'>
+        <DraggableList items={experiences} onReorder={reorderExperiences}>
+          {(experience, index, { DragHandle }) => (
+          <div className='rounded-3xl border border-slate-200 bg-slate-50/70 p-5'>
             <div className='mb-5 flex items-center justify-between gap-3'>
-              <div>
+              <div className='flex items-center gap-2'>
+                {DragHandle}
                 <p className='text-xs font-semibold uppercase tracking-[0.22em] text-slate-400'>
                   Role {index + 1}
                 </p>
@@ -209,7 +216,8 @@ const ExperienceForm = ({ data, onChange }) => {
               />
             </div>
           </div>
-        ))}
+          )}
+        </DraggableList>
       </div>
 
       <button
