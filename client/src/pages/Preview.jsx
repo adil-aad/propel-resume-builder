@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { dummyResumeData } from '../assets/assets'
 import Loading from '../components/Loading'
 import ResumePreview from '../components/ResumePreview'
-import { ArrowLeftIcon, Download, Globe2, Lock } from 'lucide-react'
+import { ArrowLeftIcon, Download, Globe2, Loader2, Lock } from 'lucide-react'
 import api from '../configs/api'
+import { exportResumePdf } from '../utils/exportResumePdf'
 
 const Preview = () => {
 
   const {resumeId} = useParams()
 
-  const [isLoading, setIsLoading] = useState(false)
-
   const [resumeData, setResumeData] = useState(null)
   const [isMissing, setIsMissing] = useState(false)
 
   const loadResume = async () => {
-    setIsLoading(true)
-
     try {
       const { data } = await api.get('/api/resumes/public/' + resumeId)
       setResumeData(data.resume)
@@ -26,72 +22,25 @@ const Preview = () => {
         setIsMissing(true)
        }
       console.log(error.message)
-    } finally {
-      setIsLoading(false)
     }
   }
 
-  const downloadResume = () => {
+  const [isDownloading, setIsDownloading] = useState(false)
+
+  const downloadResume = async () => {
     const resumeNode = document.getElementById('resume-preview')
     if (!resumeNode) return
 
-    const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
-      .map((node) => node.outerHTML)
-      .join('\n')
+    setIsDownloading(true)
 
-    const iframe = document.createElement('iframe')
-    iframe.style.position = 'fixed'
-    iframe.style.right = '0'
-    iframe.style.bottom = '0'
-    iframe.style.width = '0'
-    iframe.style.height = '0'
-    iframe.style.border = '0'
-    document.body.appendChild(iframe)
+    try {
+      await exportResumePdf(resumeNode, resumeData?.title || 'Resume')
 
-    const iframeDocument = iframe.contentWindow?.document
-    if (!iframeDocument) {
-      document.body.removeChild(iframe)
-      return
+    } catch (error) {
+      console.error('PDF export error:', error)
+    } finally {
+      setIsDownloading(false)
     }
-
-    iframeDocument.open()
-    iframeDocument.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>${resumeData?.title || 'Resume'}</title>
-          ${styles}
-          <style>
-            body {
-              margin: 0;
-              background: white;
-              -webkit-print-color-adjust: exact;
-              print-color-adjust: exact;
-            }
-            #print-root > * {
-              border: none !important;
-              box-shadow: none !important;
-              border-radius: 0 !important;
-            }
-            @page {
-              margin: 12mm;
-            }
-          </style>
-        </head>
-        <body>
-          <div id="print-root">${resumeNode.outerHTML}</div>
-        </body>
-      </html>
-    `)
-    iframeDocument.close()
-
-    setTimeout(() => {
-      iframe.contentWindow?.focus()
-      iframe.contentWindow?.print()
-      setTimeout(() => {
-        document.body.removeChild(iframe)
-      }, 1000)
-    }, 250)
   }
 
   useEffect(() => {
@@ -156,10 +105,11 @@ const Preview = () => {
             <button
               type='button'
               onClick={downloadResume}
-              className='inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800'
+              disabled={isDownloading}
+              className='inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60'
             >
-              <Download className='size-4' />
-              Download
+              {isDownloading ? <Loader2 className='size-4 animate-spin' /> : <Download className='size-4' />}
+              {isDownloading ? 'Exporting...' : 'Download'}
             </button>
           </div>
         </div>

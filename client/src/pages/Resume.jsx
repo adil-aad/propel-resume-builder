@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
-import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, Download, FileText, FolderIcon, GraduationCap, Lock, Save, Share2, Sparkles, Unlock, User } from 'lucide-react'
+import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, Download, FileText, FolderIcon, GraduationCap, Loader2, Lock, Save, Share2, Sparkles, Unlock, User } from 'lucide-react'
 import EducaitonForm from '../components/EducaitonForm'
 import ExperienceForm from '../components/ExperienceForm'
 import PersonalInfo from '../components/PersonalInfo'
@@ -14,6 +14,7 @@ import ColorPicker from '../components/ColorPicker'
 import api from '../configs/api.js'
 import { useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
+import { exportResumePdf } from '../utils/exportResumePdf.js'
 
 const Resume = () => {
 
@@ -124,74 +125,22 @@ const Resume = () => {
   }
 
 
-  const downloadResume = () => {
+  const [isDownloading, setIsDownloading] = useState(false)
+
+  const downloadResume = async () => {
     const resumeNode = document.getElementById('resume-preview')
     if (!resumeNode) return
 
-    const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
-      .map((node) => node.outerHTML)
-      .join('\n')
+    setIsDownloading(true)
 
-    const iframe = document.createElement('iframe')
-    iframe.style.position = 'fixed'
-    iframe.style.right = '0'
-    iframe.style.bottom = '0'
-    iframe.style.width = '0'
-    iframe.style.height = '0'
-    iframe.style.border = '0'
-    document.body.appendChild(iframe)
+    try {
+      await exportResumePdf(resumeNode, resumeData.title || 'Resume')
 
-    const iframeDocument = iframe.contentWindow?.document
-    if (!iframeDocument) {
-      document.body.removeChild(iframe)
-      alert('Unable to prepare the resume for download.')
-      return
+    } catch (error) {
+      console.error('PDF export error:', error)
+    } finally {
+      setIsDownloading(false)
     }
-
-    iframeDocument.open()
-    iframeDocument.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>${resumeData.title || 'Resume'}</title>
-          ${styles}
-          <style>
-            body {
-              margin: 0;
-              background: white;
-              -webkit-print-color-adjust: exact;
-              print-color-adjust: exact;
-            }
-            #print-root {
-              width: 100%;
-              margin: 0;
-              padding: 0;
-              background: white;
-            }
-            #print-root > * {
-              border: none !important;
-              box-shadow: none !important;
-              border-radius: 0 !important;
-            }
-            @page {
-              margin: 12mm;
-            }
-          </style>
-        </head>
-        <body>
-          <div id="print-root">${resumeNode.outerHTML}</div>
-        </body>
-      </html>
-    `)
-    iframeDocument.close()
-
-    setTimeout(() => {
-      iframe.contentWindow?.focus()
-      iframe.contentWindow?.print()
-      setTimeout(() => {
-        document.body.removeChild(iframe)
-      }, 1000)
-    }, 250)
   }
 
   useEffect(()=>{
@@ -412,10 +361,11 @@ const Resume = () => {
                     <button
                       type='button'
                       onClick={downloadResume}
-                      className='inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 transition hover:border-slate-300 hover:bg-slate-50'
+                      disabled={isDownloading}
+                      className='inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50'
                     >
-                      <Download className='size-3.5' />
-                      Download
+                      {isDownloading ? <Loader2 className='size-3.5 animate-spin' /> : <Download className='size-3.5' />}
+                      {isDownloading ? 'Exporting...' : 'Download'}
                     </button>
                   </div>
                 </div>

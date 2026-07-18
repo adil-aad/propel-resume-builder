@@ -37,33 +37,33 @@ const ModernTemplate = ({ data, accentColor }) => {
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm ">
 					{data.personal_info?.email && (
-						<div className="flex items-center gap-2">
-							<Mail className="size-4" />
-							<span>{data.personal_info.email}</span>
+						<div className="flex items-start gap-2">
+							<Mail className="mt-0.5 size-4 shrink-0" />
+							<span className="leading-5">{data.personal_info.email}</span>
 						</div>
 					)}
 					{data.personal_info?.phone && (
-						<div className="flex items-center gap-2">
-							<Phone className="size-4" />
-							<span>{data.personal_info.phone}</span>
+						<div className="flex items-start gap-2">
+							<Phone className="mt-0.5 size-4 shrink-0" />
+							<span className="leading-5">{data.personal_info.phone}</span>
 						</div>
 					)}
 					{data.personal_info?.location && (
-						<div className="flex items-center gap-2">
-							<MapPin className="size-4" />
-							<span>{data.personal_info.location}</span>
+						<div className="flex items-start gap-2">
+							<MapPin className="mt-0.5 size-4 shrink-0" />
+							<span className="leading-5">{data.personal_info.location}</span>
 						</div>
 					)}
 					{data.personal_info?.linkedin && (
-						<a target="_blank" href={data.personal_info?.linkedin} className="flex items-center gap-2">
-							<LinkedInIcon className="size-4" />
-							<span className="break-all text-xs">{data.personal_info.linkedin.split("https://www.")[1] ? data.personal_info.linkedin.split("https://www.")[1] : data.personal_info.linkedin}</span>
+						<a target="_blank" href={data.personal_info?.linkedin} className="flex items-start gap-2">
+							<LinkedInIcon className="size-4 shrink-0" />
+							<span className="break-all text-xs leading-4">{data.personal_info.linkedin.split("https://www.")[1] ? data.personal_info.linkedin.split("https://www.")[1] : data.personal_info.linkedin}</span>
 						</a>
 					)}
 					{data.personal_info?.website && (
-						<a target="_blank" href={data.personal_info?.website} className="flex items-center gap-2">
-							<Globe className="size-4" />
-							<span className="break-all text-xs">{data.personal_info.website.split("https://")[1] ? data.personal_info.website.split("https://")[1] : data.personal_info.website}</span>
+						<a target="_blank" href={data.personal_info?.website} className="flex items-start gap-2">
+							<Globe className="size-4 shrink-0" />
+							<span className="break-all text-xs leading-4">{data.personal_info.website.split("https://")[1] ? data.personal_info.website.split("https://")[1] : data.personal_info.website}</span>
 						</a>
 					)}
 				</div>

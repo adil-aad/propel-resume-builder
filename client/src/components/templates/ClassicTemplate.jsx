@@ -36,33 +36,33 @@ const ClassicTemplate = ({ data, accentColor }) => {
 
                 <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
                     {data.personal_info?.email && (
-                        <div className="flex items-center gap-1">
-                            <Mail className="size-4" />
-                            <span>{data.personal_info.email}</span>
+                        <div className="flex items-start gap-1">
+                            <Mail className="mt-0.5 size-4 shrink-0" />
+                            <span className="leading-5">{data.personal_info.email}</span>
                         </div>
                     )}
                     {data.personal_info?.phone && (
-                        <div className="flex items-center gap-1">
-                            <Phone className="size-4" />
-                            <span>{data.personal_info.phone}</span>
+                        <div className="flex items-start gap-1">
+                            <Phone className="mt-0.5 size-4 shrink-0" />
+                            <span className="leading-5">{data.personal_info.phone}</span>
                         </div>
                     )}
                     {data.personal_info?.location && (
-                        <div className="flex items-center gap-1">
-                            <MapPin className="size-4" />
-                            <span>{data.personal_info.location}</span>
+                        <div className="flex items-start gap-1">
+                            <MapPin className="mt-0.5 size-4 shrink-0" />
+                            <span className="leading-5">{data.personal_info.location}</span>
                         </div>
                     )}
                     {data.personal_info?.linkedin && (
-                        <div className="flex items-center gap-1">
-                            <LinkedInIcon className="size-4" />
-                            <span className="break-all">{data.personal_info.linkedin}</span>
+                        <div className="flex items-start gap-1">
+                            <LinkedInIcon className="mt-0.5 size-4 shrink-0" />
+                            <span className="break-all leading-5">{data.personal_info.linkedin}</span>
                         </div>
                     )}
                     {data.personal_info?.website && (
-                        <div className="flex items-center gap-1">
-                            <Globe className="size-4" />
-                            <span className="break-all">{data.personal_info.website}</span>
+                        <div className="flex items-start gap-1">
+                            <Globe className="mt-0.5 size-4 shrink-0" />
+                            <span className="break-all leading-5">{data.personal_info.website}</span>
                         </div>
                     )}
                 </div>

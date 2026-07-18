@@ -62,33 +62,33 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         </h2>
                         <div className="space-y-2 text-sm">
                             {data.personal_info?.phone && (
-                                <div className="flex items-center gap-2">
-                                    <Phone size={14} style={{ color: accentColor }} />
-                                    <span>{data.personal_info.phone}</span>
+                                <div className="flex items-start gap-2">
+                                    <Phone size={14} className="mt-[3px] shrink-0" style={{ color: accentColor }} />
+                                    <span className="leading-5">{data.personal_info.phone}</span>
                                 </div>
                             )}
                             {data.personal_info?.email && (
-                                <div className="flex items-center gap-2">
-                                    <Mail size={14} style={{ color: accentColor }} />
-                                    <span>{data.personal_info.email}</span>
+                                <div className="flex items-start gap-2">
+                                    <Mail size={14} className="mt-[3px] shrink-0" style={{ color: accentColor }} />
+                                    <span className="leading-5">{data.personal_info.email}</span>
                                 </div>
                             )}
                             {data.personal_info?.location && (
-                                <div className="flex items-center gap-2">
-                                    <MapPin size={14} style={{ color: accentColor }} />
-                                    <span>{data.personal_info.location}</span>
+                                <div className="flex items-start gap-2">
+                                    <MapPin size={14} className="mt-[3px] shrink-0" style={{ color: accentColor }} />
+                                    <span className="leading-5">{data.personal_info.location}</span>
                                 </div>
                             )}
                             {data.personal_info?.linkedin && (
-                                <div className="flex items-center gap-2">
-                                    <LinkedInIcon className="size-[14px]" style={{ color: accentColor }} />
-                                    <span className="break-all">{data.personal_info.linkedin}</span>
+                                <div className="flex items-start gap-2">
+                                    <LinkedInIcon className="mt-[3px] size-[14px] shrink-0" style={{ color: accentColor }} />
+                                    <span className="break-all leading-5">{data.personal_info.linkedin}</span>
                                 </div>
                             )}
                             {data.personal_info?.website && (
-                                <div className="flex items-center gap-2">
-                                    <Globe size={14} style={{ color: accentColor }} />
-                                    <span className="break-all">{data.personal_info.website}</span>
+                                <div className="flex items-start gap-2">
+                                    <Globe size={14} className="mt-[3px] shrink-0" style={{ color: accentColor }} />
+                                    <span className="break-all leading-5">{data.personal_info.website}</span>
                                 </div>
                             )}
                         </div>
