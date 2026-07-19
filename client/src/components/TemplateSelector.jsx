@@ -58,10 +58,11 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
                 <div className='flex items-center gap-3'>
                     <span
                         className='hidden rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] sm:inline-flex'
-                        style={{ backgroundColor: `${selected.accent}18`, color: selected.accent }}
+                        style={{ backgroundColor: '#0f172a', color: '#ffffff' }}
                     >
                         Active
                     </span>
+
                     <ChevronDown className={`size-4 text-slate-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </div>
             </button>

@@ -19,7 +19,7 @@ const NavBar = () => {
                 <Link to='/' className='flex items-center gap-3'>
                     <div className='h-8 w-8 rotate-12 rounded-lg bg-slate-950'></div>
                     <div>
-                        <p className='text-[10px] font-medium uppercase tracking-[0.24em] text-slate-400'>Workspace</p>
+
                         <span className='text-xl font-bold tracking-tight text-slate-950'>Propel Resume</span>
                     </div>
                 </Link>
