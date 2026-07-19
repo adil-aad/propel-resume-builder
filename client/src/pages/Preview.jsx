@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Loading from '../components/Loading'
 import ResumePreview from '../components/ResumePreview'
-import { ArrowLeftIcon, Download, Globe2, Loader2, Lock } from 'lucide-react'
+import { ArrowLeftIcon, Download, FileText, Globe2, Loader2, Lock } from 'lucide-react'
 import api from '../configs/api'
 import { exportResumePdf } from '../utils/exportResumePdf'
+import { exportAtsResumePdf } from '../utils/exportAtsResumePdf'
 
 const Preview = () => {
 
@@ -26,6 +27,7 @@ const Preview = () => {
   }
 
   const [isDownloading, setIsDownloading] = useState(false)
+  const [isDownloadingAts, setIsDownloadingAts] = useState(false)
 
   const downloadResume = async () => {
     const resumeNode = document.getElementById('resume-preview')
@@ -40,6 +42,18 @@ const Preview = () => {
       console.error('PDF export error:', error)
     } finally {
       setIsDownloading(false)
+    }
+  }
+
+  const downloadAtsResume = () => {
+    setIsDownloadingAts(true)
+
+    try {
+      exportAtsResumePdf(resumeData)
+    } catch (error) {
+      console.error('ATS PDF export error:', error)
+    } finally {
+      setIsDownloadingAts(false)
     }
   }
 
@@ -110,6 +124,15 @@ const Preview = () => {
             >
               {isDownloading ? <Loader2 className='size-4 animate-spin' /> : <Download className='size-4' />}
               {isDownloading ? 'Exporting...' : 'Download'}
+            </button>
+            <button
+              type='button'
+              onClick={downloadAtsResume}
+              disabled={isDownloadingAts}
+              className='inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60'
+            >
+              {isDownloadingAts ? <Loader2 className='size-4 animate-spin' /> : <FileText className='size-4' />}
+              {isDownloadingAts ? 'Exporting...' : 'ATS PDF'}
             </button>
           </div>
         </div>

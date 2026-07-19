@@ -1,5 +1,6 @@
 import {
   Clock3,
+  Copy,
   FilePenLineIcon,
   PencilIcon,
   PlusIcon,
@@ -93,6 +94,17 @@ const Dashboard = () => {
       toast.error(error?.response?.data?.message || error.message)
     }
     
+  }
+
+  const duplicateResume = async (resumeId) => {
+    try {
+      const { data } = await api.post(`/api/resumes/duplicate/${resumeId}`, {}, {headers: {Authorization: token}})
+      setAllResumes(prev => [data.resume, ...prev])
+      toast.success(data.message)
+      navigate(`/app/builder/${data.resume._id}`)
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message)
+    }
   }
 
   useEffect(() => {
@@ -282,6 +294,14 @@ const Dashboard = () => {
                     >
                       <button
                         className="rounded-xl border border-slate-200 p-2 text-slate-500 transition hover:border-slate-300 hover:text-cyan-600"
+                        title="Duplicate resume"
+                        onClick={() => duplicateResume(resume._id)}
+                      >
+                        <Copy className="size-4" />
+                      </button>
+                      <button
+                        className="rounded-xl border border-slate-200 p-2 text-slate-500 transition hover:border-slate-300 hover:text-cyan-600"
+                        title="Rename resume"
                         onClick={() => {
                           setEditResumeId(resume._id)
                           setTitle(resume.title)

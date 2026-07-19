@@ -15,6 +15,8 @@ import api from '../configs/api.js'
 import { useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import { exportResumePdf } from '../utils/exportResumePdf.js'
+import { exportAtsResumePdf } from '../utils/exportAtsResumePdf.js'
+
 
 const Resume = () => {
 
@@ -38,6 +40,7 @@ const Resume = () => {
   const [activeSectionIndex, setActiveSectionIndex] = useState(0)
   const [removeBackground, setRemoveBackground] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+
 
   const sections = [
     {id: "personal", name: "Personal Info", icon: User},
@@ -126,6 +129,8 @@ const Resume = () => {
 
 
   const [isDownloading, setIsDownloading] = useState(false)
+  const [isDownloadingAts, setIsDownloadingAts] = useState(false)
+
 
   const downloadResume = async () => {
     const resumeNode = document.getElementById('resume-preview')
@@ -140,6 +145,18 @@ const Resume = () => {
       console.error('PDF export error:', error)
     } finally {
       setIsDownloading(false)
+    }
+  }
+
+  const downloadAtsResume = () => {
+    setIsDownloadingAts(true)
+
+    try {
+      exportAtsResumePdf(resumeData)
+    } catch (error) {
+      console.error('ATS PDF export error:', error)
+    } finally {
+      setIsDownloadingAts(false)
     }
   }
 
@@ -367,6 +384,16 @@ const Resume = () => {
                       {isDownloading ? <Loader2 className='size-3.5 animate-spin' /> : <Download className='size-3.5' />}
                       {isDownloading ? 'Exporting...' : 'Download'}
                     </button>
+                    <button
+                      type='button'
+                      onClick={downloadAtsResume}
+                      disabled={isDownloadingAts}
+                      className='inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60'
+                    >
+                      {isDownloadingAts ? <Loader2 className='size-3.5 animate-spin' /> : <FileText className='size-3.5' />}
+                      {isDownloadingAts ? 'Exporting...' : 'ATS PDF'}
+                    </button>
+
                   </div>
                 </div>
               </div>
@@ -380,6 +407,8 @@ const Resume = () => {
                 selectedColor={resumeData.accent_color}
                 onChange={(accent_color) => setResumeData((prev) => ({ ...prev, accent_color }))}
               />
+
+
 
               <ResumePreview
                 data={resumeData}

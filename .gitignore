@@ -141,6 +141,10 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+# Misc
+TODO.md
+
+
 ### react ###
 .DS_*
 **/*.backup.*

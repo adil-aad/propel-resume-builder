@@ -39,6 +39,31 @@ export const deleteResume = async (req, res) => {
     }
 }
 
+export const duplicateResume = async (req, res) => {
+    try {
+        const userId = req.userId
+        const {resumeId} = req.params
+
+        const resume = await Resume.findOne({userId, _id: resumeId}).lean()
+
+        if(!resume){
+           return res.status(404).json({message: "Resume not Found"})
+        }
+
+        const {_id, createdAt, updatedAt, __v, ...resumeCopy} = resume
+        const newResume = await Resume.create({
+            ...resumeCopy,
+            userId,
+            title: `${resume.title || 'Untitled Resume'} Copy`,
+            public: false,
+        })
+
+        return res.status(201).json({message: "Resume duplicated successfully", resume: newResume})
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+}
+
 
 //get user by id
 

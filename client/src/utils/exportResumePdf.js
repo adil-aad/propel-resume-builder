@@ -136,6 +136,77 @@ const sanitizeFileName = (name) => {
   return cleanName || 'Resume'
 }
 
+const rowWhitespaceScore = (context, width, y) => {
+  const sampleWidth = Math.max(1, Math.floor(width / 6))
+  const startX = Math.floor((width - sampleWidth) / 2)
+  const data = context.getImageData(startX, y, sampleWidth, 1).data
+  let score = 0
+
+  for (let index = 0; index < data.length; index += 4) {
+    const alpha = data[index + 3] / 255
+    const brightness = (data[index] + data[index + 1] + data[index + 2]) / 3
+    score += brightness * alpha + 255 * (1 - alpha)
+  }
+
+  return score / sampleWidth
+}
+
+const findPageBreak = (context, width, startY, idealEndY, canvasHeight) => {
+  const minEndY = Math.min(canvasHeight, startY + Math.floor((idealEndY - startY) * 0.72))
+  const maxEndY = Math.min(canvasHeight, idealEndY)
+
+  if (maxEndY >= canvasHeight) return canvasHeight
+  if (maxEndY <= minEndY) return maxEndY
+
+  let bestY = maxEndY
+  let bestScore = -1
+
+  for (let y = maxEndY; y >= minEndY; y -= 4) {
+    const score = rowWhitespaceScore(context, width, y)
+
+    if (score > bestScore) {
+      bestScore = score
+      bestY = y
+    }
+
+    if (score > 250) break
+  }
+
+  return bestY
+}
+
+const addCanvasPages = (pdf, canvas) => {
+  const pdfWidth = pdf.internal.pageSize.getWidth()
+  const pdfHeight = pdf.internal.pageSize.getHeight()
+  const pageCanvasHeight = Math.floor((canvas.width * pdfHeight) / pdfWidth)
+  const sourceContext = canvas.getContext('2d', { willReadFrequently: true })
+
+  let startY = 0
+  let pageIndex = 0
+
+  while (startY < canvas.height) {
+    const idealEndY = Math.min(canvas.height, startY + pageCanvasHeight)
+    const endY = findPageBreak(sourceContext, canvas.width, startY, idealEndY, canvas.height)
+    const sliceHeight = Math.max(1, endY - startY)
+    const pageCanvas = document.createElement('canvas')
+    const pageContext = pageCanvas.getContext('2d')
+
+    pageCanvas.width = canvas.width
+    pageCanvas.height = sliceHeight
+    pageContext.fillStyle = '#ffffff'
+    pageContext.fillRect(0, 0, pageCanvas.width, pageCanvas.height)
+    pageContext.drawImage(canvas, 0, startY, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight)
+
+    if (pageIndex > 0) pdf.addPage()
+
+    const imageHeight = (sliceHeight * pdfWidth) / canvas.width
+    pdf.addImage(pageCanvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, pdfWidth, imageHeight)
+
+    startY = endY
+    pageIndex += 1
+  }
+}
+
 export const exportResumePdf = async (resumeNode, title = 'Resume') => {
   const clone = resumeNode.cloneNode(true)
   resolveImageSources(clone)
@@ -180,24 +251,8 @@ export const exportResumePdf = async (resumeNode, title = 'Resume') => {
       windowWidth: EXPORT_WIDTH,
     })
 
-    const imageData = canvas.toDataURL('image/jpeg', 0.98)
     const pdf = new jsPDF('p', 'mm', 'a4')
-    const pdfWidth = pdf.internal.pageSize.getWidth()
-    const pdfHeight = pdf.internal.pageSize.getHeight()
-    const imageHeight = (canvas.height * pdfWidth) / canvas.width
-
-    let remainingHeight = imageHeight
-    let position = 0
-
-    pdf.addImage(imageData, 'JPEG', 0, position, pdfWidth, imageHeight)
-    remainingHeight -= pdfHeight
-
-    while (remainingHeight > 0) {
-      position -= pdfHeight
-      pdf.addPage()
-      pdf.addImage(imageData, 'JPEG', 0, position, pdfWidth, imageHeight)
-      remainingHeight -= pdfHeight
-    }
+    addCanvasPages(pdf, canvas)
 
     pdf.save(`${sanitizeFileName(title)}.pdf`)
   } finally {
