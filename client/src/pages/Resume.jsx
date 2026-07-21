@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { dummyResumeData } from '../assets/assets'
 import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, Download, FileText, FolderIcon, GraduationCap, Loader2, Lock, Save, Share2, Sparkles, Unlock, User } from 'lucide-react'
 import EducaitonForm from '../components/EducaitonForm'
 import ExperienceForm from '../components/ExperienceForm'
@@ -173,13 +172,6 @@ const Resume = () => {
       })
       .catch((error) => {
         if (!isMounted) return
-
-        const resume = dummyResumeData.find(resume => resume._id === resumeId)
-        if (resume) {
-          setResumeData(resume)
-          document.title = resume.title
-          return
-        }
 
         toast.error(error?.response?.data?.message || error.message)
       })
