@@ -75,6 +75,13 @@
     box-shadow: 0 0 0 3px rgb(22 21 15 / 0.08);
   }
 
+  .field:-webkit-autofill,
+  .field:-webkit-autofill:hover,
+  .field:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-ink);
+    -webkit-box-shadow: 0 0 0 40rem var(--color-surface) inset;
+  }
+
   .field:disabled {
     background-color: var(--color-paper-dim);
     color: var(--color-faint);

@@ -1,24 +1,34 @@
-import React, { useState } from 'react';
-import { Lock, Mail, User2Icon } from 'lucide-react';
-import { useDispatch } from 'react-redux';
-import toast from 'react-hot-toast';
-import api from '../configs/api.js';
-import { login } from '../app/features/authSlice.js';
+import React, { useState } from 'react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import toast from 'react-hot-toast'
+import api from '../configs/api.js'
+import { login } from '../app/features/authSlice.js'
+import Logo from '../components/Logo.jsx'
+
+const highlights = [
+  'Live preview while you write',
+  'Import an existing PDF resume',
+  'Export a clean, ATS-ready copy',
+]
 
 const Login = () => {
   const dispatch = useDispatch()
 
   const query = new URLSearchParams(window.location.search)
   const urlState = query.get('state')
-  const [state, setState] = useState(urlState === "register" ? "register" : "login");
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
-  });
+
+  const [state, setState] = useState(urlState === 'register' ? 'register' : 'login')
+  const [showPassword, setShowPassword] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' })
+
+  const isRegister = state === 'register'
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    setIsSubmitting(true)
+
     try {
       const { data } = await api.post(`/api/users/${state}`, formData)
       dispatch(login(data))
@@ -26,102 +36,130 @@ const Login = () => {
       toast.success(data.message)
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message)
+    } finally {
+      setIsSubmitting(false)
     }
-  };
+  }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
 
-  const toggleState = () => setState(prev => prev === "login" ? "register" : "login");
+  const toggleState = () => setState(prev => (prev === 'login' ? 'register' : 'login'))
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 font-inter">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        .font-inter { font-family: 'Inter', sans-serif; }
-        input:-webkit-autofill,
-        input:-webkit-autofill:focus {
-          transition: background-color 600000s 0s, color 600000s 0s;
-        }
-      `}</style>
+    <div className='min-h-screen bg-paper lg:grid lg:grid-cols-[1.05fr_1fr]'>
+      {/* Brand panel */}
+      <aside className='relative hidden flex-col justify-between bg-ink p-12 lg:flex'>
+        <Logo tone='light' />
 
-      <form onSubmit={handleSubmit} className="sm:w-[350px] w-full text-center rounded-2xl px-8 py-8 bg-white/5 backdrop-blur-sm border border-white/20 shadow-xl">
-        <div className="flex items-center justify-center mb-6">
-          <div className="w-12 h-12 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-xl rotate-45" />
+        <div>
+          <h2 className='max-w-md text-4xl leading-[1.15] font-medium text-paper'>
+            One workspace for every version of your resume.
+          </h2>
+
+          <ul className='mt-10 max-w-md border-t border-white/10'>
+            {highlights.map((item) => (
+              <li key={item} className='border-b border-white/10 py-4 text-sm text-paper/60'>
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <h1 className="text-white text-3xl font-medium">
-          {state === "login" ? "Login" : "Sign up"}
-        </h1>
-        
-        <p className="text-gray-400 text-sm mt-2">Please {state} to continue</p>
+        <p className='text-xs text-paper/35'>© 2026 Propel Resume</p>
+      </aside>
 
-        {state !== "login" && (
-          <div className="flex items-center mt-6 w-full bg-white/10 backdrop-blur-sm border border-white/20 h-12 rounded-full px-6 gap-2">
-            <User2Icon size={16} className="text-gray-400" />
-            <input 
-              type="text" 
-              name="name" 
-              placeholder="Name" 
-              className="bg-transparent border-none outline-none text-white placeholder:text-gray-400 w-full" 
-              value={formData.name} 
-              onChange={handleChange} 
-              required 
-            />
+      {/* Form panel */}
+      <main className='flex min-h-screen items-center justify-center px-6 py-12 lg:min-h-0'>
+        <div className='w-full max-w-sm'>
+          <div className='lg:hidden'>
+            <Logo />
           </div>
-        )}
 
-        <div className="flex items-center w-full mt-4 bg-white/10 backdrop-blur-sm border border-white/20 h-12 rounded-full px-6 gap-2">
-          <Mail size={13} className="text-gray-400" />
-          <input 
-            type="email" 
-            name="email" 
-            placeholder="Email id" 
-            className="bg-transparent border-none outline-none text-white placeholder:text-gray-400 w-full" 
-            value={formData.email} 
-            onChange={handleChange} 
-            required 
-          />
+          <h1 className='mt-10 text-3xl font-medium text-ink lg:mt-0'>
+            {isRegister ? 'Create your account' : 'Welcome back'}
+          </h1>
+
+          <form onSubmit={handleSubmit} className='mt-8 space-y-5'>
+            {isRegister && (
+              <div className='space-y-2'>
+                <label htmlFor='name' className='label'>Name</label>
+                <input
+                  id='name'
+                  type='text'
+                  name='name'
+                  autoComplete='name'
+                  placeholder='Ada Lovelace'
+                  className='field'
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
+
+            <div className='space-y-2'>
+              <label htmlFor='email' className='label'>Email</label>
+              <input
+                id='email'
+                type='email'
+                name='email'
+                autoComplete='email'
+                placeholder='you@example.com'
+                className='field'
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className='space-y-2'>
+              <label htmlFor='password' className='label'>Password</label>
+              <div className='relative'>
+                <input
+                  id='password'
+                  type={showPassword ? 'text' : 'password'}
+                  name='password'
+                  autoComplete={isRegister ? 'new-password' : 'current-password'}
+                  placeholder='••••••••'
+                  className='field pr-11'
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <button
+                  type='button'
+                  onClick={() => setShowPassword(prev => !prev)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  className='absolute inset-y-0 right-0 flex items-center px-3.5 text-faint transition hover:text-ink'
+                >
+                  {showPassword ? <EyeOff className='size-4' /> : <Eye className='size-4' />}
+                </button>
+              </div>
+            </div>
+
+            <button type='submit' disabled={isSubmitting} className='btn btn-primary w-full'>
+              {isSubmitting && <Loader2 className='size-4 animate-spin' />}
+              {isRegister ? 'Create account' : 'Sign in'}
+            </button>
+          </form>
+
+          <p className='mt-8 text-sm text-muted'>
+            {isRegister ? 'Already have an account?' : "Don't have an account?"}
+            <button
+              type='button'
+              onClick={toggleState}
+              className='ml-1.5 font-medium text-ink underline underline-offset-4 decoration-line-strong transition hover:decoration-ink'
+            >
+              {isRegister ? 'Sign in' : 'Create one'}
+            </button>
+          </p>
         </div>
-
-        <div className="flex items-center mt-4 w-full bg-white/10 backdrop-blur-sm border border-white/20 h-12 rounded-full px-6 gap-2">
-          <Lock size={13} className="text-gray-400" />
-          <input 
-            type="password" 
-            name="password" 
-            placeholder="Password" 
-            className="bg-transparent border-none outline-none text-white placeholder:text-gray-400 w-full" 
-            value={formData.password} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
-
-        <div className="mt-4 text-left">
-          <button type="button" className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
-            Forget password?
-          </button>
-        </div>
-
-        <button type="submit" className="mt-4 w-full h-11 rounded-full text-white font-medium bg-gradient-to-r from-cyan-500 to-purple-600 hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
-          {state === "login" ? "Login" : "Sign up"}
-        </button>
-
-        <p className="text-gray-400 text-sm mt-4">
-          {state === "login" ? "Don't have an account?" : "Already have an account?"}
-          <button 
-            type="button" 
-            onClick={toggleState} 
-            className="text-cyan-400 hover:text-cyan-300 hover:underline ml-1 font-medium"
-          >
-            click here
-          </button>
-        </p>
-      </form>
+      </main>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
