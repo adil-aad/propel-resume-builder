@@ -1,36 +1,23 @@
+import React from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-const GetStarted = () => {
-    return (
-        <section id='cta' className='w-full bg-[#f3efe7] px-6 pb-20 md:px-12 lg:px-20'>
-            <div className="mx-auto max-w-7xl overflow-hidden rounded-[36px] border border-slate-900/10 bg-slate-950 px-6 py-10 text-white shadow-[0_30px_90px_-45px_rgba(15,23,42,0.75)] sm:px-8 lg:px-10">
-                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-                    <div>
-                        <p className="text-xs font-medium uppercase tracking-[0.28em] text-white/45">
-                            Get Started
-                        </p>
-                        <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
-                            A sharper resume in minutes.
-                        </h2>
-                        <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">
-                            Propel Resume gives you a cleaner system to build faster — whether starting fresh or refining an existing file.
-                        </p>
-                    </div>
+const GetStarted = () => (
+  <section id='cta' className='px-6 pb-20 lg:px-8'>
+    <div className='mx-auto flex max-w-6xl flex-col items-start gap-8 rounded-xl bg-ink px-8 py-14 sm:px-12 lg:flex-row lg:items-center lg:justify-between'>
+      <h2 className='max-w-lg text-3xl leading-tight font-medium text-paper md:text-4xl'>
+        Your next resume is about ten minutes away.
+      </h2>
 
-                    <div className="flex flex-col gap-4 sm:flex-row lg:justify-end">
-                        <Link to="/app" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#f97316] px-7 py-3 text-base font-semibold text-white transition hover:bg-[#ea580c]">
-                            Start Free
-                            <ArrowRight className="size-4" />
-                        </Link>
-                        <a href="#features" className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-3 text-base font-semibold text-white transition hover:bg-white/10">
-                            View Features
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
-}
+      <Link
+        to='/app?state=register'
+        className='btn shrink-0 bg-paper px-5 py-3 text-ink hover:bg-white'
+      >
+        Start building
+        <ArrowRight className='size-4' />
+      </Link>
+    </div>
+  </section>
+)
 
 export default GetStarted

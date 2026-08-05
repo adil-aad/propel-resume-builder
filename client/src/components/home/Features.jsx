@@ -1,103 +1,76 @@
-import React from "react"
-import { FileText, LayoutTemplate, Sparkles, UploadCloud, WandSparkles, Zap } from 'lucide-react'
-import Title from "./Title"
+import React from 'react'
+import { FileText, LayoutTemplate, ShieldCheck, UploadCloud } from 'lucide-react'
+import Title from './Title'
 
-const Features = () => {
-    const features = [
-        {
-            icon: FileText,
-            title: 'Focused writing',
-            description: 'Capture experience, education, and skills in a clean, scannable builder.',
-            accent: 'bg-[#fff4ea] text-[#f97316]',
-        },
-        {
-            icon: UploadCloud,
-            title: 'Import PDFs',
-            description: 'Pull in an existing resume and pick up where you left off.',
-            accent: 'bg-[#e8faf4] text-[#0f766e]',
-        },
-        {
-            icon: LayoutTemplate,
-            title: 'Live previews',
-            description: 'Switch layouts and see changes instantly as you edit.',
-            accent: 'bg-[#eef6ff] text-[#2563eb]',
-        },
-        {
-            icon: WandSparkles,
-            title: 'Clean presentation',
-            description: 'ATS-friendly structure with typography and spacing that stands out.',
-            accent: 'bg-[#f7efff] text-[#7c3aed]',
-        },
-    ]
+const features = [
+  {
+    icon: FileText,
+    title: 'Guided sections',
+    description: 'Work through experience, education, projects, and skills one screen at a time.',
+  },
+  {
+    icon: UploadCloud,
+    title: 'PDF import',
+    description: 'Upload a resume you already have and keep editing it here.',
+  },
+  {
+    icon: LayoutTemplate,
+    title: 'Four templates',
+    description: 'Switch layout or accent color and see the change immediately.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'ATS export',
+    description: 'Download a text-based PDF that applicant tracking systems can read.',
+  },
+]
 
-    return (
-        <section id="features" className="bg-[#f3efe7] px-6 py-20 md:px-12 lg:px-20">
-            <div className="mx-auto max-w-7xl">
-                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-4 py-2 text-sm font-medium text-slate-700 backdrop-blur-sm">
-                    <Zap width={14} className="text-orange-500"/>
-                    Streamlined resume workflow
-                </div>
+const steps = [
+  ['Start', 'Create a blank resume or import an existing PDF.'],
+  ['Write', 'Fill in each section with the preview open beside you.'],
+  ['Export', 'Download a styled or ATS-ready PDF, or share a link.'],
+]
 
-                <Title
-                    title='Clear from draft to final preview'
-                    description='Guided editing, quick imports, and live previews — so you focus on content, not the interface.'
-                    align='left'
-                />
+const Features = () => (
+  <>
+    <section id='features' className='border-t border-line px-6 py-20 lg:px-8'>
+      <div className='mx-auto max-w-6xl'>
+        <Title
+          align='left'
+          title='Everything the resume needs, nothing it does not.'
+        />
 
-                <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-                    <div className="rounded-[32px] border border-slate-900/10 bg-slate-950 p-6 text-white shadow-[0_30px_90px_-45px_rgba(15,23,42,0.7)]">
-                        <div className="flex items-center justify-between gap-4">
-                            <div>
-                                <p className="text-xs uppercase tracking-[0.26em] text-white/45">Workflow</p>
-                                <h3 className="mt-2 text-3xl font-semibold">Organized from the first click.</h3>
-                            </div>
-                            <div className="hidden h-16 w-16 rounded-2xl bg-white/10 lg:block" />
-                        </div>
+        <div className='mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4'>
+          {features.map((feature) => {
+            const Icon = feature.icon
+            return (
+              <div key={feature.title}>
+                <Icon className='size-5 text-accent' strokeWidth={1.75} />
+                <h3 className='mt-4 text-base font-medium text-ink'>{feature.title}</h3>
+                <p className='mt-2 text-sm leading-6 text-muted'>{feature.description}</p>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
 
-                        <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                            {features.map((feature, index) => {
-                                const Icon = feature.icon
-                                return (
-                                    <div key={index} className="rounded-[26px] border border-white/10 bg-white/5 p-5 transition hover:-translate-y-1 hover:bg-white/10">
-                                        <div className={`inline-flex size-12 items-center justify-center rounded-2xl ${feature.accent}`}>
-                                            <Icon className="size-5" />
-                                        </div>
-                                        <h4 className="mt-4 text-lg font-semibold text-white">{feature.title}</h4>
-                                        <p className="mt-2 text-sm leading-6 text-slate-300">{feature.description}</p>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
+    <section id='how' className='border-t border-line px-6 py-20 lg:px-8'>
+      <div className='mx-auto max-w-6xl'>
+        <Title align='left' title='How it works' />
 
-                    <div id="workflow" className="rounded-[32px] border border-slate-900/10 bg-white/75 p-6 shadow-[0_24px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-sm">
-                        <div className="flex items-center gap-3">
-                            <div className="inline-flex size-12 items-center justify-center rounded-2xl bg-slate-950 text-white">
-                                <Sparkles className="size-5" />
-                            </div>
-                            <div>
-                                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">How it flows</p>
-                                <h3 className="text-2xl font-semibold text-slate-900">From draft to done, simply.</h3>
-                            </div>
-                        </div>
-
-                        <div className="mt-8 space-y-4">
-                            {[
-                                ['01', 'Start fresh or upload an existing PDF.'],
-                                ['02', 'Edit details and sections with live feedback.'],
-                                ['03', 'Preview, refine, and manage versions from your dashboard.'],
-                            ].map(([step, text]) => (
-                                <div key={step} className="flex gap-4 rounded-[24px] border border-slate-200 bg-[#faf7f2] p-5">
-                                    <div className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">{step}</div>
-                                    <p className="text-sm leading-6 text-slate-700">{text}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
-}
+        <ol className='mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3'>
+          {steps.map(([label, text], index) => (
+            <li key={label} className='bg-paper p-7'>
+              <span className='text-sm text-faint tabular-nums'>0{index + 1}</span>
+              <h3 className='mt-3 text-base font-medium text-ink'>{label}</h3>
+              <p className='mt-2 text-sm leading-6 text-muted'>{text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  </>
+)
 
 export default Features
