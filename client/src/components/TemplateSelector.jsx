@@ -1,37 +1,100 @@
-import React, { useMemo, useState } from 'react'
-import { Check, ChevronDown, LayoutTemplate } from 'lucide-react'
+import React, { useState } from 'react'
+import { Check, ChevronDown } from 'lucide-react'
 
-const TemplateSelector = ({ selectedTemplate, onChange }) => {
+const templates = [
+    { id: 'classic', name: 'Classic' },
+    { id: 'modern', name: 'Modern' },
+    { id: 'minimal-image', name: 'Minimal Image' },
+    { id: 'minimal', name: 'Minimal' },
+]
+
+const Thumbnail = ({ id, accent }) => {
+    if (id === 'modern') {
+        return (
+            <div className='overflow-hidden'>
+                <div className='px-2.5 py-3' style={{ backgroundColor: accent }}>
+                    <div className='h-2 w-14 rounded-full bg-white/90' />
+                    <div className='mt-2 grid grid-cols-2 gap-1.5'>
+                        <div className='h-1 rounded-full bg-white/50' />
+                        <div className='h-1 rounded-full bg-white/40' />
+                    </div>
+                </div>
+                <div className='space-y-1.5 p-2.5'>
+                    <div className='h-1.5 w-10 rounded-full bg-line-strong' />
+                    <div className='h-1 w-full rounded-full bg-line' />
+                    <div className='h-1 w-4/5 rounded-full bg-line' />
+                </div>
+            </div>
+        )
+    }
+
+    if (id === 'minimal-image') {
+        return (
+            <div className='grid h-full grid-cols-[0.7fr_1.3fr]'>
+                <div className='border-r border-line p-2.5'>
+                    <div className='mx-auto size-7 rounded-full bg-line-strong' />
+                    <div className='mt-2.5 space-y-1'>
+                        <div className='h-1 w-full rounded-full bg-line' />
+                        <div className='h-1 w-4/5 rounded-full bg-line' />
+                    </div>
+                </div>
+                <div className='p-2.5'>
+                    <div className='h-2 w-16 rounded-full bg-line-strong' />
+                    <div className='mt-1.5 h-1 w-10 rounded-full' style={{ backgroundColor: accent }} />
+                    <div className='mt-3 space-y-1'>
+                        <div className='h-1 w-full rounded-full bg-line' />
+                        <div className='h-1 w-11/12 rounded-full bg-line' />
+                        <div className='h-1 w-3/4 rounded-full bg-line' />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (id === 'minimal') {
+        return (
+            <div className='p-2.5'>
+                <div className='h-2 w-16 rounded-full bg-line-strong' />
+                <div className='mt-2 flex gap-1.5'>
+                    <div className='h-1 w-8 rounded-full bg-line' />
+                    <div className='h-1 w-6 rounded-full bg-line' />
+                </div>
+                <div className='mt-3 space-y-2.5'>
+                    {[0, 1].map(row => (
+                        <div key={row}>
+                            <div className='h-1 w-9 rounded-full' style={{ backgroundColor: accent }} />
+                            <div className='mt-1.5 h-1 w-full rounded-full bg-line' />
+                            <div className='mt-1 h-1 w-4/5 rounded-full bg-line' />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    return (
+        <div className='p-2.5'>
+            <div className='border-b-2 pb-2' style={{ borderColor: accent }}>
+                <div className='h-2 w-16 rounded-full' style={{ backgroundColor: accent }} />
+                <div className='mt-2 flex gap-1.5'>
+                    <div className='h-1 w-8 rounded-full bg-line' />
+                    <div className='h-1 w-8 rounded-full bg-line' />
+                </div>
+            </div>
+            <div className='mt-2.5 space-y-1.5'>
+                <div className='h-1.5 w-12 rounded-full bg-line-strong' />
+                <div className='space-y-1 border-l-2 pl-2' style={{ borderColor: accent }}>
+                    <div className='h-1 w-full rounded-full bg-line' />
+                    <div className='h-1 w-5/6 rounded-full bg-line' />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const TemplateSelector = ({ selectedTemplate, accentColor = '#16150f', onChange }) => {
     const [isOpen, setIsOpen] = useState(false)
-
-    const templates = useMemo(() => ([
-        {
-            id: 'classic',
-            name: 'Classic',
-            description: 'Structured headings with a formal two-tone hierarchy.',
-            accent: '#f97316',
-        },
-        {
-            id: 'modern',
-            name: 'Modern',
-            description: 'Bold header with cleaner cards and contemporary spacing.',
-            accent: '#2563eb',
-        },
-        {
-            id: 'minimal-image',
-            name: 'Minimal Image',
-            description: 'Image-forward layout with a split editorial composition.',
-            accent: '#0f766e',
-        },
-        {
-            id: 'minimal',
-            name: 'Minimal',
-            description: 'Quiet typography and airy rhythm for a stripped-back feel.',
-            accent: '#7c3aed',
-        },
-    ]), [])
-
-    const selected = templates.find((template) => template.id === selectedTemplate) || templates[0]
+    const selected = templates.find(template => template.id === selectedTemplate) || templates[0]
 
     const handleSelect = (templateId) => {
         onChange(templateId)
@@ -39,162 +102,48 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
     }
 
     return (
-        <div className='rounded-[28px] border border-slate-200 bg-white/80 shadow-sm backdrop-blur-sm'>
+        <div className='relative'>
             <button
                 type='button'
-                onClick={() => setIsOpen((prev) => !prev)}
-                className='flex w-full items-center justify-between gap-4 px-5 py-4 text-left'
+                onClick={() => setIsOpen(prev => !prev)}
+                className='flex items-center gap-2 text-sm text-ink transition hover:text-muted'
             >
-                <div className='flex items-center gap-4'>
-                    <div className='inline-flex size-11 items-center justify-center rounded-2xl bg-slate-950 text-white'>
-                        <LayoutTemplate className='size-5' />
-                    </div>
-                    <div>
-                        <p className='text-xs font-semibold uppercase tracking-[0.24em] text-slate-400'>Template Selector</p>
-                        <h3 className='text-sm font-semibold text-slate-900'>{selected.name}</h3>
-                    </div>
-                </div>
-
-                <div className='flex items-center gap-3'>
-                    <span
-                        className='hidden rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] sm:inline-flex'
-                        style={{ backgroundColor: '#0f172a', color: '#ffffff' }}
-                    >
-                        Active
-                    </span>
-
-                    <ChevronDown className={`size-4 text-slate-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-                </div>
+                <span className='text-muted'>Template</span>
+                <span className='font-medium'>{selected.name}</span>
+                <ChevronDown className={`size-4 text-faint transition-transform ${isOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {isOpen && (
-                <div className='border-t border-slate-200 px-5 py-5'>
-                    <div className='grid gap-4 md:grid-cols-2'>
-                        {templates.map((template) => (
-                            <button
-                                key={template.id}
-                                type='button'
-                                onClick={() => handleSelect(template.id)}
-                                className={`group rounded-[24px] border p-4 text-left transition hover:-translate-y-1 ${
-                                    selectedTemplate === template.id
-                                        ? 'border-slate-900 bg-slate-50 shadow-[0_14px_34px_-28px_rgba(15,23,42,0.45)]'
-                                        : 'border-slate-200 bg-white hover:border-slate-300'
-                                }`}
-                            >
-                                <div className='flex items-start justify-between gap-4'>
-                                    <div>
-                                        <h4 className='text-base font-semibold text-slate-900'>{template.name}</h4>
-                                        <p className='mt-2 text-sm leading-6 text-slate-600'>{template.description}</p>
-                                    </div>
-                                    <span
-                                        className={`inline-flex size-7 items-center justify-center rounded-full border ${
-                                            selectedTemplate === template.id
-                                                ? 'border-slate-900 bg-slate-900 text-white'
-                                                : 'border-slate-300 text-transparent'
+                <>
+                    <div className='fixed inset-0 z-30' onClick={() => setIsOpen(false)} />
+
+                    <div className='absolute left-0 top-full z-40 mt-3 w-80 rounded-xl border border-line bg-surface p-2 shadow-[0_24px_60px_-32px_rgb(22_21_15_/_0.45)]'>
+                        <div className='grid grid-cols-2 gap-2'>
+                            {templates.map((template) => {
+                                const isSelected = selectedTemplate === template.id
+                                return (
+                                    <button
+                                        key={template.id}
+                                        type='button'
+                                        onClick={() => handleSelect(template.id)}
+                                        className={`rounded-lg border p-2 text-left transition ${
+                                            isSelected ? 'border-ink bg-paper' : 'border-transparent hover:bg-paper'
                                         }`}
                                     >
-                                        <Check className='size-4' />
-                                    </span>
-                                </div>
-
-                                <div className='mt-4 overflow-hidden rounded-[20px] border border-slate-200 bg-[#f8f5ef]'>
-                                    {template.id === 'classic' && (
-                                        <div className='p-3'>
-                                            <div className='border-b-[3px] pb-3' style={{ borderColor: template.accent }}>
-                                                <div className='h-4 w-28 rounded-full' style={{ backgroundColor: template.accent }} />
-                                                <div className='mt-3 flex gap-2'>
-                                                    <div className='h-2 w-16 rounded-full bg-slate-200' />
-                                                    <div className='h-2 w-16 rounded-full bg-slate-200' />
-                                                    <div className='h-2 w-12 rounded-full bg-slate-200' />
-                                                </div>
-                                            </div>
-                                            <div className='mt-3 space-y-2'>
-                                                <div className='h-2 w-24 rounded-full bg-slate-300' />
-                                                <div className='border-l-[3px] space-y-2 pl-3' style={{ borderColor: template.accent }}>
-                                                    <div className='h-3 w-2/3 rounded-full bg-slate-300' />
-                                                    <div className='h-2 w-full rounded-full bg-slate-200' />
-                                                    <div className='h-2 w-5/6 rounded-full bg-slate-200' />
-                                                </div>
-                                            </div>
+                                        <div className='h-24 overflow-hidden rounded border border-line bg-surface'>
+                                            <Thumbnail id={template.id} accent={accentColor} />
                                         </div>
-                                    )}
 
-                                    {template.id === 'modern' && (
-                                        <div className='overflow-hidden'>
-                                            <div className='px-3 py-4 text-white' style={{ backgroundColor: template.accent }}>
-                                                <div className='h-4 w-24 rounded-full bg-white/90' />
-                                                <div className='mt-3 grid grid-cols-2 gap-2'>
-                                                    <div className='h-2 rounded-full bg-white/50' />
-                                                    <div className='h-2 rounded-full bg-white/40' />
-                                                    <div className='h-2 rounded-full bg-white/40' />
-                                                    <div className='h-2 rounded-full bg-white/50' />
-                                                </div>
-                                            </div>
-                                            <div className='space-y-3 p-3'>
-                                                <div className='h-3 w-20 rounded-full bg-slate-300' />
-                                                <div className='rounded-2xl border border-slate-200 p-3'>
-                                                    <div className='flex items-center justify-between gap-2'>
-                                                        <div className='h-3 w-24 rounded-full bg-slate-300' />
-                                                        <div className='h-5 w-14 rounded-full bg-slate-100' />
-                                                    </div>
-                                                    <div className='mt-3 h-2 w-full rounded-full bg-slate-200' />
-                                                    <div className='mt-2 h-2 w-4/5 rounded-full bg-slate-200' />
-                                                </div>
-                                            </div>
+                                        <div className='mt-2 flex items-center justify-between gap-2'>
+                                            <span className='text-xs font-medium text-ink'>{template.name}</span>
+                                            {isSelected && <Check className='size-3.5 text-ink' />}
                                         </div>
-                                    )}
-
-                                    {template.id === 'minimal-image' && (
-                                        <div className='grid grid-cols-[0.72fr_1.28fr]'>
-                                            <div className='border-r border-slate-200 p-3'>
-                                                <div className='mx-auto h-12 w-12 rounded-full bg-slate-300' />
-                                                <div className='mt-4 space-y-2'>
-                                                    <div className='h-2 w-14 rounded-full bg-slate-300' />
-                                                    <div className='h-2 w-full rounded-full bg-slate-200' />
-                                                    <div className='h-2 w-5/6 rounded-full bg-slate-200' />
-                                                </div>
-                                            </div>
-                                            <div className='p-3'>
-                                                <div className='h-4 w-28 rounded-full bg-slate-400' />
-                                                <div className='mt-2 h-2 w-20 rounded-full' style={{ backgroundColor: template.accent }} />
-                                                <div className='mt-5 space-y-2'>
-                                                    <div className='h-2 w-16 rounded-full' style={{ backgroundColor: `${template.accent}aa` }} />
-                                                    <div className='h-2 w-full rounded-full bg-slate-200' />
-                                                    <div className='h-2 w-11/12 rounded-full bg-slate-200' />
-                                                    <div className='mt-3 h-2 w-20 rounded-full' style={{ backgroundColor: `${template.accent}aa` }} />
-                                                    <div className='h-2 w-full rounded-full bg-slate-200' />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {template.id === 'minimal' && (
-                                        <div className='p-3'>
-                                            <div className='h-4 w-28 rounded-full bg-slate-400' />
-                                            <div className='mt-3 flex gap-3'>
-                                                <div className='h-2 w-16 rounded-full bg-slate-200' />
-                                                <div className='h-2 w-12 rounded-full bg-slate-200' />
-                                                <div className='h-2 w-14 rounded-full bg-slate-200' />
-                                            </div>
-                                            <div className='mt-4 space-y-3'>
-                                                <div>
-                                                    <div className='h-2 w-16 rounded-full' style={{ backgroundColor: template.accent }} />
-                                                    <div className='mt-2 h-2 w-full rounded-full bg-slate-200' />
-                                                    <div className='mt-2 h-2 w-4/5 rounded-full bg-slate-200' />
-                                                </div>
-                                                <div>
-                                                    <div className='h-2 w-20 rounded-full' style={{ backgroundColor: template.accent }} />
-                                                    <div className='mt-2 h-2 w-full rounded-full bg-slate-200' />
-                                                    <div className='mt-2 h-2 w-5/6 rounded-full bg-slate-200' />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </button>
-                        ))}
+                                    </button>
+                                )
+                            })}
+                        </div>
                     </div>
-                </div>
+                </>
             )}
         </div>
     )
