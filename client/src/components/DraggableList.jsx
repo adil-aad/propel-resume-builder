@@ -30,7 +30,7 @@ export const DragHandle = ({ className = '' }) => {
   return (
     <button
       type='button'
-      className={`cursor-grab touch-none text-slate-400 transition hover:text-slate-700 active:cursor-grabbing ${className}`}
+      className={`cursor-grab touch-none text-faint transition hover:text-ink active:cursor-grabbing ${className}`}
       {...ctx.attributes}
       {...ctx.listeners}
       aria-label='Drag to reorder'

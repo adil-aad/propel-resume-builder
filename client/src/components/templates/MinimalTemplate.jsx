@@ -72,11 +72,20 @@ const MinimalTemplate = ({ data, accentColor }) => {
                         Projects
                     </h2>
 
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         {data.project.map((proj, index) => (
-                            <div key={index} className="flex flex-col items-baseline justify-between gap-2">
-                                <h3 className="text-lg font-medium">{proj.name}</h3>
-                                <p className="text-gray-600">{proj.description}</p>
+                            <div key={index}>
+                                <div className="mb-1 flex items-baseline justify-between gap-4">
+                                    <h3 className="text-lg font-medium">{proj.name}</h3>
+                                    {proj.type && (
+                                        <span className="text-sm text-gray-500">{proj.type}</span>
+                                    )}
+                                </div>
+                                {proj.description && (
+                                    <div className="whitespace-pre-line leading-relaxed text-gray-700">
+                                        {proj.description}
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -114,9 +123,9 @@ const MinimalTemplate = ({ data, accentColor }) => {
                         Skills
                     </h2>
 
-                    <div className="text-gray-700">
-                        {data.skills.join(" * ")}
-                    </div>
+                    <p className="leading-relaxed text-gray-700">
+                        {data.skills.join(" · ")}
+                    </p>
                 </section>
             )}
         </div>

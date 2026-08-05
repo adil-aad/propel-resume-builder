@@ -23,6 +23,7 @@ const EducaitonForm = ({ data, onChange }) => {
       {
         institution: '',
         degree: '',
+        field: '',
         graduation_date: '',
         gpa: '',
       },
@@ -84,7 +85,18 @@ const EducaitonForm = ({ data, onChange }) => {
                     type='text'
                     value={education.degree || ''}
                     onChange={(e) => updateEducation(index, 'degree', e.target.value)}
-                    placeholder='BSc Computer Science'
+                    placeholder='BSc'
+                    className='field'
+                  />
+                </div>
+
+                <div className='space-y-2'>
+                  <label className='label'>Field of study</label>
+                  <input
+                    type='text'
+                    value={education.field || ''}
+                    onChange={(e) => updateEducation(index, 'field', e.target.value)}
+                    placeholder='Computer Science'
                     className='field'
                   />
                 </div>
@@ -101,7 +113,7 @@ const EducaitonForm = ({ data, onChange }) => {
                   />
                 </div>
 
-                <div className='space-y-2 sm:col-span-2'>
+                <div className='space-y-2'>
                   <label className='label'>GPA or grade</label>
                   <input
                     type='text'

@@ -12,6 +12,9 @@ const LinkedInIcon = ({ className, style }) => (
 	</svg>
 )
 
+const displayUrl = (url) => url.replace(/^https?:\/\//i, "").replace(/^www\./i, "").replace(/\/$/, "");
+const linkHref = (url) => (/^https?:\/\//i.test(url) ? url : `https://${url}`);
+
 const ModernTemplate = ({ data, accentColor }) => {
 	const formatDate = (dateStr) => {
 		if (!dateStr) return "";
@@ -55,15 +58,25 @@ const ModernTemplate = ({ data, accentColor }) => {
 						</div>
 					)}
 					{data.personal_info?.linkedin && (
-						<a target="_blank" href={data.personal_info?.linkedin} className="flex items-start gap-2">
-							<LinkedInIcon className="size-4 shrink-0" />
-							<span className="break-all text-xs leading-4">{data.personal_info.linkedin.split("https://www.")[1] ? data.personal_info.linkedin.split("https://www.")[1] : data.personal_info.linkedin}</span>
+						<a
+							target="_blank"
+							rel="noreferrer"
+							href={linkHref(data.personal_info.linkedin)}
+							className="flex items-start gap-2"
+						>
+							<LinkedInIcon className="mt-0.5 size-4 shrink-0" />
+							<span className="break-all leading-5">{displayUrl(data.personal_info.linkedin)}</span>
 						</a>
 					)}
 					{data.personal_info?.website && (
-						<a target="_blank" href={data.personal_info?.website} className="flex items-start gap-2">
-							<Globe className="size-4 shrink-0" />
-							<span className="break-all text-xs leading-4">{data.personal_info.website.split("https://")[1] ? data.personal_info.website.split("https://")[1] : data.personal_info.website}</span>
+						<a
+							target="_blank"
+							rel="noreferrer"
+							href={linkHref(data.personal_info.website)}
+							className="flex items-start gap-2"
+						>
+							<Globe className="mt-0.5 size-4 shrink-0" />
+							<span className="break-all leading-5">{displayUrl(data.personal_info.website)}</span>
 						</a>
 					)}
 				</div>
@@ -121,15 +134,12 @@ const ModernTemplate = ({ data, accentColor }) => {
 						<div className="space-y-6">
 							{data.project.map((p, index) => (
 								<div key={index} className="relative pl-6 border-l border-gray-200" style={{borderLeftColor: accentColor}}>
-
-
-									<div className="flex justify-between items-start">
-										<div>
-											<h3 className="text-lg font-medium text-gray-900">{p.name}</h3>
-										</div>
+									<div className="flex items-baseline justify-between gap-4">
+										<h3 className="text-lg font-medium text-gray-900">{p.name}</h3>
+										{p.type && <span className="text-sm text-gray-500">{p.type}</span>}
 									</div>
 									{p.description && (
-										<div className="text-gray-700 leading-relaxed text-sm mt-3">
+										<div className="mt-2 whitespace-pre-line text-sm leading-relaxed text-gray-700">
 											{p.description}
 										</div>
 									)}

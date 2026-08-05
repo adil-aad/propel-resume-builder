@@ -103,7 +103,9 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                             <div className="space-y-4 text-sm">
                                 {data.education.map((edu, index) => (
                                     <div key={index}>
-                                        <p className="font-semibold uppercase">{edu.degree}</p>
+                                        <p className="font-semibold uppercase">
+                                            {edu.degree} {edu.field && `in ${edu.field}`}
+                                        </p>
                                         <p className="text-zinc-600">{edu.institution}</p>
                                         <p className="text-xs text-zinc-500">
                                             {formatDate(edu.graduation_date)}
@@ -167,7 +169,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                         </p>
                                         {exp.description && (
                                             <ul className="list-disc list-inside text-sm text-zinc-700 leading-relaxed space-y-1">
-                                                {exp.description.split("\n").map((line, i) => (
+                                                {exp.description.split("\n").filter((line) => line.trim()).map((line, i) => (
                                                     <li key={i}>{line}</li>
                                                 ))}
                                             </ul>
@@ -181,19 +183,21 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     {/* Projects */}
                     {data.project && data.project.length > 0 && (
                         <section>
-                            <h2 className="text-sm uppercase tracking-widest font-semibold" style={{ color: accentColor }}>
+                            <h2 className="mb-4 text-sm font-semibold tracking-widest" style={{ color: accentColor }}>
                                 PROJECTS
                             </h2>
                             <div className="space-y-4">
                                 {data.project.map((project, index) => (
                                     <div key={index}>
-                                        <h3 className="text-md font-medium text-zinc-800 mt-3">{project.name}</h3>
-                                        <p className="text-sm mb-1" style={{ color: accentColor }} >
-                                            {project.type}
-                                        </p>
+                                        <h3 className="font-medium text-zinc-900">{project.name}</h3>
+                                        {project.type && (
+                                            <p className="mb-1 text-sm" style={{ color: accentColor }}>
+                                                {project.type}
+                                            </p>
+                                        )}
                                         {project.description && (
-                                            <ul className="list-disc list-inside text-sm text-zinc-700  space-y-1">
-                                                {project.description.split("\n").map((line, i) => (
+                                            <ul className="list-disc list-inside text-sm text-zinc-700 space-y-1">
+                                                {project.description.split("\n").filter((line) => line.trim()).map((line, i) => (
                                                     <li key={i}>{line}</li>
                                                 ))}
                                             </ul>

@@ -114,9 +114,16 @@ const ClassicTemplate = ({ data, accentColor }) => {
 
                     <div className="space-y-3">
                         {data.project.map((proj, index) => (
-                            <div key={index} className="border-l-[3px] border-gray-300 pl-6">
-                                <h3 className="font-semibold text-gray-800">{proj.name}</h3>
-                                <p className="text-gray-600">{proj.description}</p>
+                            <div key={index} className="border-l-[3px] border-gray-300 pl-4">
+                                <h3 className="font-semibold text-gray-900">{proj.name}</h3>
+                                {proj.type && (
+                                    <p className="text-sm font-medium text-gray-600">{proj.type}</p>
+                                )}
+                                {proj.description && (
+                                    <p className="mt-1 whitespace-pre-line leading-relaxed text-gray-700">
+                                        {proj.description}
+                                    </p>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -154,10 +161,14 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         CORE SKILLS
                     </h2>
 
-                    <div className="flex flex-wrap gap-4">
+                    <div className="grid gap-x-6 gap-y-1 text-gray-700 sm:grid-cols-3">
                         {data.skills.map((skill, index) => (
-                            <div key={index} className="text-gray-700">
-                                * {skill}
+                            <div key={index} className="flex items-baseline gap-2">
+                                <span
+                                    className="inline-block size-1.5 shrink-0 rounded-full"
+                                    style={{ backgroundColor: accentColor }}
+                                />
+                                <span>{skill}</span>
                             </div>
                         ))}
                     </div>
